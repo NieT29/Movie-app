@@ -2,10 +2,18 @@ package com.example.movieapp.entity;
 
 import com.example.movieapp.model.enums.MovieType;
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "movies")
 public class Movie {
     @Id
@@ -18,6 +26,7 @@ public class Movie {
     @Column(nullable = false)
     String slug;
 
+    @Column(columnDefinition = "TEXT")
     String description;
 
     String poster;
