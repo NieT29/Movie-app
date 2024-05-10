@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BlogRepository extends JpaRepository<Blog, Integer> {
     Page<Blog> findByStatusOrderByCreatedAtDesc(Boolean status, Pageable pageable);
-    Blog findByIdAndSlugAndStatus(int id, String slug, Boolean status);
+    Blog findByIdAndSlugAndStatus(Integer id, String slug, Boolean status);
 
 }

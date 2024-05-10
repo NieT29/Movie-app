@@ -32,7 +32,7 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findByStatusOrderByRatingDesc(status, pageRequest);
     }
 
-    public Movie getMovie(int id, String slug, Boolean status) {
+    public Movie getMovie(Integer id, String slug, Boolean status) {
         return movieRepository.findByIdAndSlugAndStatus(id, slug, status);
     }
 }

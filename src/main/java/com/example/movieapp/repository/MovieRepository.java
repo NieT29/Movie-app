@@ -19,7 +19,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     List<Movie> findByRatingLessThanEqual(Double max);
     List<Movie> findByCreatedAtAfter(LocalDateTime createdAt);
     List<Movie> findByTypeAndStatus(MovieType type, Boolean status, Sort sort);
-    Movie findByIdAndSlugAndStatus(int id, String slug, Boolean status);
+    Movie findByIdAndSlugAndStatus(Integer id, String slug, Boolean status);
 
     // sắp xếp
     List<Movie> findByType(MovieType type, Sort sort);

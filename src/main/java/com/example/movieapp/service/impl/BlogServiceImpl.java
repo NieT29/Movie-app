@@ -19,7 +19,7 @@ public class BlogServiceImpl implements BlogService {
         return blogRepository.findByStatusOrderByCreatedAtDesc(status, pageRequest);
     }
 
-    public Blog getBlog(int id, String slug, Boolean status) {
+    public Blog getBlog(Integer id, String slug, Boolean status) {
         return blogRepository.findByIdAndSlugAndStatus(id, slug, status);
     }
 }

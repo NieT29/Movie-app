@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 
 public interface BlogService {
     Page<Blog> getBlogByType(Boolean status, int page, int pageSize);
-    Blog getBlog(int id, String slug, Boolean status);
+    Blog getBlog(Integer id, String slug, Boolean status);
 }
