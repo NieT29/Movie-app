@@ -13,13 +13,13 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
     List<Movie> findByName(String name);
     List<Movie> findByNameIgnoreCase(String name);
-    // tìm kiếm movie theo name chứa từ khóa keyword
     List<Movie> findByNameContaining(String keyword);
     List<Movie> findByNameAndSlug(String name, String slug);
     List<Movie> findByRatingBetween(Double min, Double max);
     List<Movie> findByRatingLessThanEqual(Double max);
     List<Movie> findByCreatedAtAfter(LocalDateTime createdAt);
     List<Movie> findByTypeAndStatus(MovieType type, Boolean status, Sort sort);
+    Movie findByIdAndSlugAndStatus(int id, String slug, Boolean status);
 
     // sắp xếp
     List<Movie> findByType(MovieType type, Sort sort);
@@ -35,4 +35,6 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     // phân trang
     Page<Movie> findByStatus(Boolean status, Pageable pageable);
+    Page<Movie> findByTypeAndStatus(MovieType movieType, Boolean status, Pageable pageable);
+    Page<Movie> findByStatusOrderByRatingDesc(Boolean status, Pageable pageable);
 }

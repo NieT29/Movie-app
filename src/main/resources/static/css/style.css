@@ -42,8 +42,30 @@ a {
     height: 400px;
 }
 
+.blog-time-index {
+    font-size: 12px;
+}
+
+.title-blog-index {
+    display: inline-block;
+    color: white;
+}
+
+.title-blog-index:hover  {
+    color: #D98A5E;
+}
+
+.click-blog {
+    font-size: 14px;
+    color: #D98A5E;
+}
+
+.click-blog:hover {
+    opacity: 0.8;
+}
+
 .movie-infor-poster img {
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .movie-infor p {
@@ -52,6 +74,26 @@ a {
 
 .movie-infor .star {
     color: #FF9727;
+}
+
+.blog-thumbnail {
+    height: 200px;
+}
+
+.blog-thumbnail img {
+    object-fit: fill;
+}
+
+.blog-time {
+    font-size: 14px;
+}
+
+.blog-introduce {
+    color: white;
+}
+
+.blog-item:hover  .blog-introduce{
+    color: #3f3f46;
 }
 
 .list-episode {
