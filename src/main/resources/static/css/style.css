@@ -69,7 +69,15 @@ a {
 }
 
 .movie-infor p {
+    color: #6c757d;
+}
+
+.movie-infor a {
     color: white;
+}
+
+.movie-infor a:hover {
+    color: #FF9727;
 }
 
 .movie-infor .star {
@@ -102,15 +110,10 @@ a {
 }
 
 .review .avatar {
-    height: 35px;
-    width: 35px;
-    text-align: center;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #3f3f46;
-    font-weight: 600;
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .review .review-name {
@@ -133,7 +136,28 @@ a {
     color: #d4d4d8;
 }
 
-.img-comment {
-    height: 48px;
-    width: 48px;
+.comment-blog .avatar-cmt{
+    height: 35px;
+    width: 35px;
+    object-fit: cover;
+}
+
+.coment-blog-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #d4d4d8;
+}
+
+.coment-blog-time {
+    font-size: 12px;
+    color: #a1a1a1;
+}
+
+.user-comment-blog {
+    background-color: #27272A;
+}
+
+.comment-blog-text {
+    font-size: 14px;
+    color: #d4d4d8;
 }

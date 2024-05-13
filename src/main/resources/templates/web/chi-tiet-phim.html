@@ -46,13 +46,40 @@
             <div class="col">
                 <div class="movie-infor">
                     <h4 class="text-white" th:text="${movie.name}">Phát Thanh Viên Thành Thật</h4>
-                    <p>Năm sản xuất: <span class="text-secondary" th:text="${movie.releaseYear}">1234</span></p>
-                    <p>Thể loại: <span class="text-secondary">Tình Cảm, Hài Hước </span></p>
-                    <p>Đạo diễn: <span class="text-secondary">Jang Ji-yeon </span></p>
-                    <p>Diễn viên: <span class="text-secondary">Kang Han-na, Go Kyung-pyo, Joo Jong-hyuk, Lee Bom-so-ri, Shin Jung-keun, Kang Ae-sim </span></p>
-                    <p th:text="${movie.description}">Phát Thanh Viên Thành Thật kể về Song Ki Baek (Go Kyung Pyo thủ vai) độc thân và đã bước sang 33 tuổi. Anh làm việc làm phát thanh viên tại một đài truyền hình. Mọi người coi anh là một phát thanh viên lý tưởng. Anh lịch sự và có bản lĩnh. Một ngày nọ, Song Ki Baek mắc phải một căn bệnh khiến anh nói mà không suy nghĩ trước. Anh đang đối mặt với cuộc khủng hoảng lớn nhất của cuộc đời mình.
+                    <p>
+
+                        <span th:text="${movie.description}" ></span>
                     </p>
-                    <p>Rating: <span th:text="${movie.rating}">4.4</span>
+                    <p>Quốc Gia: <span class="text-white" th:text="${movie.country.name}">Hàn Quốc</span></p>
+                    <p>Năm sản xuất: <span class="text-white" th:text="${movie.releaseYear}">1234</span></p>
+                    <p>Thể loại:
+                        <span >
+                            <a href=""  th:each="genre,iterStat : ${movie.genres}">
+                                    <th:block th:if="${iterStat.index != 0}">,</th:block>
+                                    <th:block th:text="${genre.name}"></th:block>
+                            </a>
+                        </span>
+                    </p>
+
+                    <p>Đạo diễn:
+                        <span >
+                            <a href=""  th:each="director,iterStat : ${movie.directors}">
+                                    <th:block th:if="${iterStat.last}">,</th:block>
+                                    <th:block th:text="${director.name}"></th:block>
+                            </a>
+                        </span>
+                    </p>
+
+                    <p>Diễn viên:
+                        <span >
+                            <a href=""  th:each="actor,iterStat : ${movie.actors}">
+                                    <th:block th:if="${iterStat.index != 0}">,</th:block>
+                                    <th:block th:text="${actor.name}"></th:block>
+                            </a>
+                        </span>
+                    </p>
+
+                    <p>Rating: <span th:text="${movie.rating}" class="text-white">4.4</span>
                         <span class="star"><i class="fa-solid fa-star"></i></span>
                     </p>
                     <button type="button" class="btn btn-danger">Xem Ngay <i class="fa-solid fa-play"></i></button>
@@ -66,39 +93,33 @@
             <div class="p-4 list-episode rounded-1">
                 <p class="text-white">DANH SÁCH TẬP</p>
                 <div>
-                    <button type="button" class="btn btn-secondary btn-sm">Tập 1</button>
-                    <button type="button" class="btn btn-secondary btn-sm">Tập 2</button>
-                    <button type="button" class="btn btn-secondary btn-sm">Tập 3 - Trailer</button>
-                    <button type="button" class="btn btn-secondary btn-sm">Tập 4 - Trailer</button>
-                    <button type="button" class="btn btn-secondary btn-sm">Tập 5 - Trailer</button>
-                    <button type="button" class="btn btn-secondary btn-sm">Tập 6 - Trailer</button>
-
+                    <th:block th:each="episode : ${episodes}">
+                        <button type="button" class="btn btn-secondary btn-sm">
+                            <a href="" class="text-white" th:text="${episode.name}">Tập 1</a>
+                        </button>
+                    </th:block>
                 </div>
             </div>
         </div>
         <div class="review px-4 py-3 border border-secondary border-opacity-25 rounded-1">
             <div class="text-white border-bottom border-secondary border-opacity-25 mb-4">
-                <p class="fw-bold">Bình Luận(2)</p>
+                <p class="fw-bold">
+                    Bình Luận
+                    <span th:if="${#lists.isEmpty(reviews)}">(0)</span>
+                    <span th:if="${not #lists.isEmpty(reviews)}">
+                        (<span th:text="${#lists.size(reviews)}"></span>)
+                    </span>
+                </p>
                 <p style="font-size: 14px;">Vui lòng <a href="#" class="text-warning-emphasis"> đăng nhập</a> để bình luận</p>
             </div>
-            <div class="text-white d-flex flex-column mb-3 p-3 user-review rounded-2">
-                <div class="d-flex align-items-center pb-2">
-                    <div class="me-2 rounded-circle  avatar">BN</div>
-                    <p class="m-0 pe-2 review-name">Baotrung Nguyen</p>
-                    <p class="m-0 review-time">11 tiếng trước</p>
+            <div class="text-white d-flex flex-column mb-3 p-3 user-review rounded-2" th:each="review : ${reviews}">
+                <div class="d-flex align-items-center pb-2" >
+                    <img th:src="${review.user.avatar}" class=" avatar me-2 "alt="">
+                    <p class="m-0 pe-2 review-name" th:text="${review.user.name}">Baotrung Nguyen</p>
+                    <p class="m-0 review-time" th:text="${#temporals.format(review.createdAt, 'dd-MM-yyyy')}">11 tiếng trước</p>
                 </div>
                 <div>
-                    <p class="m-0 review-text">Phim hài quá</p>
-                </div>
-            </div>
-            <div class="text-white d-flex flex-column mb-2 p-3 user-review rounded-2">
-                <div class="d-flex align-items-center pb-2">
-                    <div class="me-2 rounded-circle  avatar">TN</div>
-                    <p class="m-0 pe-2 review-name">Trà My Nguyễn</p>
-                    <p class="m-0 review-time">22 tiếng trước</p>
-                </div>
-                <div>
-                    <p class="m-0 review-text">Hài dữ v</p>
+                    <p class="m-0 review-text" th:text="${review.content}">Phim hài quá</p>
                 </div>
             </div>
         </div>
@@ -112,63 +133,13 @@
         </div>
 
         <div class="row">
-            <div class="col-2">
-                <a href="chi-tiet-phim.html">
+            <div class="col-2" th:each="movie : ${relateMovies}">
+                <a th:href="@{/phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug})}">
                     <div class="movie-item">
                         <div class="movie-poster rounded overflow-hidden">
-                            <img class="w-100 h-100" src="https://image.motchilltv.ac/motchill/phat-thanh-vien-thanh-that-x350.webp" alt="">
+                            <img class="w-100 h-100" th:src="${movie.poster}" alt="">
                         </div>
-                        <p class="mt-2 text-white">Phát Thanh Viên Thành Thật</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-2">
-                <a href="chi-tiet-phim.html">
-                    <div class="movie-item">
-                        <div class="movie-poster rounded overflow-hidden">
-                            <img class="w-100 h-100" src="https://image.motchilltv.ac/motchill/phat-thanh-vien-thanh-that-x350.webp" alt="">
-                        </div>
-                        <p class="mt-2 text-white">Phát Thanh Viên Thành Thật</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-2">
-                <a href="chi-tiet-phim.html">
-                    <div class="movie-item">
-                        <div class="movie-poster rounded overflow-hidden">
-                            <img class="w-100 h-100" src="https://image.motchilltv.ac/motchill/phat-thanh-vien-thanh-that-x350.webp" alt="">
-                        </div>
-                        <p class="mt-2 text-white">Phát Thanh Viên Thành Thật</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-2">
-                <a href="chi-tiet-phim.html">
-                    <div class="movie-item">
-                        <div class="movie-poster rounded overflow-hidden">
-                            <img class="w-100 h-100" src="https://image.motchilltv.ac/motchill/phat-thanh-vien-thanh-that-x350.webp" alt="">
-                        </div>
-                        <p class="mt-2 text-white">Phát Thanh Viên Thành Thật</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-2">
-                <a href="chi-tiet-phim.html">
-                    <div class="movie-item">
-                        <div class="movie-poster rounded overflow-hidden">
-                            <img class="w-100 h-100" src="https://image.motchilltv.ac/motchill/phat-thanh-vien-thanh-that-x350.webp" alt="">
-                        </div>
-                        <p class="mt-2 text-white">Phát Thanh Viên Thành Thật</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-2">
-                <a href="chi-tiet-phim.html">
-                    <div class="movie-item">
-                        <div class="movie-poster rounded overflow-hidden">
-                            <img class="w-100 h-100" src="https://image.motchilltv.ac/motchill/phat-thanh-vien-thanh-that-x350.webp" alt="">
-                        </div>
-                        <p class="mt-2 text-white">Phát Thanh Viên Thành Thật</p>
+                        <p class="mt-2 text-white" th:text="${movie.name}">Phát Thanh Viên Thành Thật</p>
                     </div>
                 </a>
             </div>

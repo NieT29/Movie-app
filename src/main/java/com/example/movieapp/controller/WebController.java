@@ -1,10 +1,8 @@
 package com.example.movieapp.controller;
 
-import com.example.movieapp.entity.Blog;
-import com.example.movieapp.entity.Movie;
+import com.example.movieapp.entity.*;
 import com.example.movieapp.model.enums.MovieType;
-import com.example.movieapp.service.BlogService;
-import com.example.movieapp.service.MovieService;
+import com.example.movieapp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class WebController {
@@ -21,6 +20,12 @@ public class WebController {
     private MovieService movieService;
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private EpisodeService episodeService;
+    @Autowired
+    private ReviewService reviewService;
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/")
     public String getHome(Model model) {
@@ -81,14 +86,26 @@ public class WebController {
 
     @GetMapping("/phim/{id}/{slug}")
     public String getDetailMovie(Model model, @PathVariable("id") int id, @PathVariable("slug") String slug) {
+        Random random = new Random();
         Movie movie = movieService.getMovie(id, slug, true);
+        List<Episode> episodes = episodeService.getEpisodeListOfMovie(id);
+        List<Review> reviews = reviewService.getReviewListOfMovie(id);
+
+        List<Genre> genres = movie.getGenres();
+        String rdGenre = genres.get(random.nextInt(genres.size())).getName();
+        List<Movie> relateMovies = movieService.getRelateMovies(id, rdGenre, true);
         model.addAttribute("movie", movie);
+        model.addAttribute("episodes", episodes);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("relateMovies",relateMovies);
         return "web/chi-tiet-phim";
     }
 
     @GetMapping("/tin-tuc/{id}/{slug}")
     public String getDetailBlog(Model model, @PathVariable("id") int id, @PathVariable("slug") String slug) {
         Blog blog = blogService.getBlog(id, slug, true);
+        List<Comment> comments = commentService.getCommentsOfBlog(id);
+        model.addAttribute("comments", comments);
         model.addAttribute("blog", blog);
         return "web/chi-tiet-blog";
     }

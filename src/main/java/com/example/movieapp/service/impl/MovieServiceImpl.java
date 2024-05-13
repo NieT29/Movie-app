@@ -35,4 +35,11 @@ public class MovieServiceImpl implements MovieService {
     public Movie getMovie(Integer id, String slug, Boolean status) {
         return movieRepository.findByIdAndSlugAndStatus(id, slug, status);
     }
+
+    @Override
+    public List<Movie> getRelateMovies(Integer id, String genreName, Boolean status) {
+        return movieRepository.findByGenres_NameAndStatusAndIdNotOrderByRatingDesc(genreName, status, id).stream()
+                .limit(6)
+                .toList();
+    }
 }

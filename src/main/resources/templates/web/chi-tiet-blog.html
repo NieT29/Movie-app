@@ -40,20 +40,25 @@
             <p th:text="${blog.content}"></p>
 
         </div>
-        <div class="comment-blog border-top border-secondary border-opacity-50 pt-4">
-            <p class="fs-6 fw-bold text-white">ĐỂ LẠI BÌNH LUẬN</p>
-            <div class="bg-white comment-box p-2">
-                <div class="py-2 text-black fw-bold border-bottom border-secondary border-opacity-50" style="width: 100%; height: 50px;">
-                    0 Bình luận
+        <div class="comment-blog px-4 py-3 border border-secondary border-opacity-25 rounded-1">
+            <div class="text-white border-bottom border-secondary border-opacity-25 mb-4">
+                <p class="fw-bold">
+                    Bình Luận
+                    <span th:if="${#lists.isEmpty(comments)}">(0)</span>
+                    <span th:if="${not #lists.isEmpty(comments)}">
+                        (<span th:text="${#lists.size(comments)}"></span>)
+                    </span>
+                </p>
+                <p style="font-size: 14px;">Vui lòng <a href="#" class="text-warning-emphasis"> đăng nhập</a> để bình luận</p>
+            </div>
+            <div class="text-white d-flex flex-column mb-3 p-3 user-comment-blog rounded-2" th:each="comment : ${comments}">
+                <div class="d-flex align-items-center pb-2">
+                    <img th:src="${comment.user.avatar}" class="rounded-circle avatar-cmt me-2 "alt="">
+                    <p class="m-0 pe-2 coment-blog-name" th:text="${comment.user.name}">Baotrung Nguyen</p>
+                    <p class="m-0 comment-blog-time" th:text="${#temporals.format(comment.createdAt, 'dd-MM-yyyy')}">11 tiếng trước</p>
                 </div>
-                <div class="pt-2 d-flex">
-                    <div class="img-comment me-3">
-                        <img src="https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" alt="">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Viết bình luận" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Đăng</button>
-                    </div>
+                <div>
+                    <p class="m-0 comment-blog-text" th:text="${comment.content}">Phim hài quá</p>
                 </div>
             </div>
         </div>

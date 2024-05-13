@@ -13,4 +13,5 @@ public interface MovieService {
    Page<Movie> getMovieByType(MovieType movieType, Boolean status, int page, int pageSize);
    Page<Movie> getHotMovies(Boolean status, int page, int pageSize);
    Movie getMovie(Integer id, String slug, Boolean status);
+   List<Movie> getRelateMovies(Integer id, String genreName, Boolean status);
 }
