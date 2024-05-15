@@ -161,3 +161,19 @@ a {
     font-size: 14px;
     color: #d4d4d8;
 }
+
+.rating1 {
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.star1 {
+    display: inline-block;
+}
+
+.star1:hover,
+.star1.active {
+    color: #EDBB0E;
+}
+
