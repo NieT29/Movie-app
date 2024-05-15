@@ -1,8 +1,10 @@
-* Danh sách tin tức: Hiển thị toàn bộ + phân trang dữ liệu
-![Screenshot 2024-05-11 022529](https://github.com/NieT29/Movie-app/assets/121416611/cc17a252-df4d-428d-8775-e07b276396b1)
-* Chi tiết tin tức: Hiển thị thông tin chi tiết của bài viết
-![Screenshot 2024-05-11 022542](https://github.com/NieT29/Movie-app/assets/121416611/ee4ef106-fc17-4ed2-9a3e-3ee2981a6eeb)
-* Một số bài viết mới nhất ở trang chủ
-![Screenshot 2024-05-11 022601](https://github.com/NieT29/Movie-app/assets/121416611/cfe05e0f-e482-41f5-9e62-9f26387e050c)
-* Chi tiết movie: Hiển thị chi tiết movie
-![Screenshot 2024-05-11 024845](https://github.com/NieT29/Movie-app/assets/121416611/2b55a7c9-93ec-4915-aadd-bcb33a590f89)
+* Trang chi tiết phim:
+  * Thông tin quốc gia, thể loại, đạo diễn, diễn viên và danh sách tập phim
+  ![Screenshot 2024-05-14 004159](https://github.com/NieT29/Movie-app/assets/121416611/6557927a-67df-4036-a947-3f0790c1ab6f)
+  * Danh sách reviews
+  ![Screenshot 2024-05-14 004215](https://github.com/NieT29/Movie-app/assets/121416611/ee52e889-2f22-404c-aac9-69f4017f616b)
+  * Danh sách các bộ phim đề xuất (phim đề xuất là phim cùng thể loại và có rating giảm dần)
+  ![Screenshot 2024-05-14 004241](https://github.com/NieT29/Movie-app/assets/121416611/51860fe1-c1ec-4ff3-8d62-01fc71dfaef9)
+* Trang chi tiết blog
+  * Danh sách comment
+  ![Screenshot 2024-05-14 004439](https://github.com/NieT29/Movie-app/assets/121416611/dca0c312-fb5c-4f5c-ba7c-e758cc989058)
