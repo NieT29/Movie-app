@@ -49,22 +49,39 @@ const reviewListEl = document.querySelector(".review-list")
 const renderReview = reviews => {
     let html = "";
     reviews.forEach(review => {
-        html += `
-            <div class="text-white d-flex flex-column mb-3 p-3 user-review rounded-2 ">
-                <div class="d-flex align-items-center pb-2" >
-                    <img src="${review.user.avatar}" class=" avatar me-2 " alt="${review.user.name}">
-                    <p class="m-0 pe-2 review-name">${review.user.name}</p>
-                    <p class="m-0 review-time">${formatDate(review.createdAt)}</p>
+        if (currentUser.id === review.user.id) {
+            html += `
+                <div class="text-white d-flex flex-column mb-3 p-3 user-review rounded-2 ">
+                    <div class="d-flex align-items-center pb-2" >
+                        <img src="${review.user.avatar}" class=" avatar me-2 " alt="${review.user.name}">
+                        <p class="m-0 pe-2 review-name">${review.user.name}</p>
+                        <p class="m-0 review-time">${formatDate(review.createdAt)}</p>
+                    </div>
+                    <div>
+                        <p class="m-0 review-text" >${review.content}</p>
+                    </div>
+                    <div class="mt-2">
+                            <button onclick="deleteReview(${review.id})" type="button" class="btn btn-outline-secondary btn-sm btn-delete" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .7rem;">Xóa</button>
+                            <button onclick="openEditModal(${review.id})" type="button" class="btn btn-outline-secondary btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .7rem;">Sửa</button>
+                    </div>
                 </div>
-                <div>
-                    <p class="m-0 review-text" >${review.content}</p>
+            `
+        } else {
+            html += `
+                <div class="text-white d-flex flex-column mb-3 p-3 user-review rounded-2 ">
+                    <div class="d-flex align-items-center pb-2" >
+                        <img src="${review.user.avatar}" class=" avatar me-2 " alt="${review.user.name}">
+                        <p class="m-0 pe-2 review-name">${review.user.name}</p>
+                        <p class="m-0 review-time">${formatDate(review.createdAt)}</p>
+                    </div>
+                    <div>
+                        <p class="m-0 review-text" >${review.content}</p>
+                    </div>
                 </div>
-                <div class="mt-2">
-                        <button onclick="deleteReview(${review.id})" type="button" class="btn btn-outline-secondary btn-sm btn-delete" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .7rem;">Xóa</button>
-                        <button onclick="openEditModal(${review.id})" type="button" class="btn btn-outline-secondary btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .7rem;">Sửa</button>
-                </div>
-            </div>
-        `
+            `
+        }
+
+
     })
 
     reviewListEl.innerHTML = html;

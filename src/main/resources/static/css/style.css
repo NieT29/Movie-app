@@ -177,3 +177,23 @@ a {
     color: #EDBB0E;
 }
 
+.card-login {
+    background-color: #27272A;
+    padding: 0 40px;
+    border-radius: 10px;
+    height: 400px;
+    width: 450px;
+}
+
+.card-register {
+    background-color: #27272A;
+    padding: 0 40px;
+    border-radius: 10px;
+    height: 550px;
+    width: 450px;
+}
+
+ .dropdown-item:hover {
+    background-color: #d8dcdf;
+}
+

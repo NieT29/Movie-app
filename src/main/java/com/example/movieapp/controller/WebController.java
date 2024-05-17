@@ -110,4 +110,13 @@ public class WebController {
         return "web/chi-tiet-blog";
     }
 
+    @GetMapping("/dang-nhap")
+    public String getLogin() {
+        return "web/login";
+    }
+
+    @GetMapping("/dang-ky")
+    public String getRegister() {
+        return "web/register";
+    }
 }

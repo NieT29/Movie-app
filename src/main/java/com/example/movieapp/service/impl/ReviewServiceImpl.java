@@ -8,6 +8,7 @@ import com.example.movieapp.repository.MovieRepository;
 import com.example.movieapp.repository.ReviewRepository;
 import com.example.movieapp.repository.UserRepository;
 import com.example.movieapp.service.ReviewService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,19 +23,16 @@ public class ReviewServiceImpl implements ReviewService {
     private MovieRepository movieRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private HttpSession session;
 
     @Override
     public List<Review> getReviewListOfMovie(Integer movieId) {
         return reviewRepository.findByMovie_IdOrderByCreatedAtDesc(movieId);
     }
 
-    // TODO: Validate thong tin: content, rating,... su dung thu vien validate
-
     public Review createReview(UpsertReviewRequest request) {
-        // TODO: fix userID. Về sau userId chính là user đang login
-        Integer userId = 3;
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = (User) session.getAttribute("currentUser");
 
         // kiểm tra xem movie có tồn tại hay không
         Movie movie = movieRepository.findById(request.getMovieId())
@@ -59,17 +57,15 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found"));
 
-        // TODO: fix userID. Về sau userId chính là user đang login
-        Integer userId = 3;
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = (User) session.getAttribute("currentUser");
+
 
         // kiểm tra xem movie có tồn tại hay không
         Movie movie = movieRepository.findById(request.getMovieId())
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
 
         // kiểm tra xem review này có phải của user hay không
-        if (!review.getUser().getId().equals(userId)) {
+        if (!review.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("Not review's owner");
         }
 
@@ -93,13 +89,11 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found"));
 
-        // TODO: fix userID. Về sau userId chính là user đang login
-        Integer userId = 3;
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = (User) session.getAttribute("currentUser");
+
 
         // kiểm tra xem review này có phải của user hay không
-        if (!review.getUser().getId().equals(userId)) {
+        if (!review.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("Not review's owner");
         }
 

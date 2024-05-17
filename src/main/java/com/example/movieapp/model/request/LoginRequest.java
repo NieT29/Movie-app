@@ -9,8 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UpsertReviewRequest {
-    String content;
-    Integer rating;
-    Integer movieId;
+public class LoginRequest {
+    String email;
+    String password;
 }

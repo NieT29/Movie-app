@@ -18,13 +18,58 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link text-white" th:href="@{/}">Trang chủ</a>
                     <a class="nav-link text-white" th:href="@{/phim-bo}">Phim bộ</a>
                     <a class="nav-link text-white" th:href="@{/phim-le}">Phim lẻ</a>
                     <a class="nav-link text-white" th:href="@{/phim-chieu-rap}">Phim chiếu rạp</a>
                     <a class="nav-link text-white" th:href="@{/tin-tuc}">Blog</a>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-secondary" th:if="${session.currentUser == null}">
+                        <a th:href="@{/dang-nhap}" class="nav-link text-white">Đăng nhập</a>
+                    </button>
+                    <div th:if="${session.currentUser != null}">
+                        <div class="dropdown-center">
+                            <a class="btn bg-ct text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${session.currentUser.name}">
+                                Dropdown link
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li th:if="${ session.currentUser.getRole().toString() == 'ADMIN'}">
+                                    <a class="dropdown-item dropdown-link-hover-dark" href="#">
+                                        <i class="fa-solid fa-user-tie pe-1"></i>
+                                        Trang quản trị
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-regular fa-id-card pe-1"></i>
+                                        Thông tin cá nhân
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-clock-rotate-left pe-1"></i>
+                                        Lịch sử xem phim
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-heart pe-1"></i>
+                                        Phim yêu thích
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-right-from-bracket pe-1"></i>
+                                        Đăng xuất
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>

@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -57,6 +58,9 @@ class MovieAppApplicationTests {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Test
     void save_movies() {
@@ -399,5 +403,14 @@ class MovieAppApplicationTests {
         System.out.println("total elements: " + page.getTotalElements());
         page.getContent().forEach(m -> System.out.println(m.getId()));
 
+    }
+
+    @Test
+    void update_password_user() {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            user.setPassword(passwordEncoder.encode("123"));
+            userRepository.save(user);
+        }
     }
 }
