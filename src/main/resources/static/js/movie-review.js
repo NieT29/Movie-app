@@ -151,6 +151,7 @@ const createReview = async (data) => {
         renderReview(reviews)
         // đóng modal
         myModalReviewEl.hide();
+        toastr.success("Đánh giá thành công")
     } catch (e) {
         console.log(e)
     }

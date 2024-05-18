@@ -1,10 +1,43 @@
-* Trang chi tiết phim:
-  * Thông tin quốc gia, thể loại, đạo diễn, diễn viên và danh sách tập phim
-  ![Screenshot 2024-05-14 004159](https://github.com/NieT29/Movie-app/assets/121416611/6557927a-67df-4036-a947-3f0790c1ab6f)
-  * Danh sách reviews
-  ![Screenshot 2024-05-14 004215](https://github.com/NieT29/Movie-app/assets/121416611/ee52e889-2f22-404c-aac9-69f4017f616b)
-  * Danh sách các bộ phim đề xuất (phim đề xuất là phim cùng thể loại và có rating giảm dần)
-  ![Screenshot 2024-05-14 004241](https://github.com/NieT29/Movie-app/assets/121416611/51860fe1-c1ec-4ff3-8d62-01fc71dfaef9)
-* Trang chi tiết blog
-  * Danh sách comment
-  ![Screenshot 2024-05-14 004439](https://github.com/NieT29/Movie-app/assets/121416611/dca0c312-fb5c-4f5c-ba7c-e758cc989058)
+- Xử lý exception trong Springboot 
+- Xử lý validation trong Stringboot
+- Xử lý validation frontend sử dụng jquery validation
+- Fragment thymeleaf (header, footer), tạo layout chung cho ứng dụng
+## Notification frontend sử dụng toastr
+- B1: Thêm jquery (jquery cần đặt trước file js)
+```html
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+```
+
+- B2: 2 file css, js sử dụng cdn
+### js
+```html
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+```
+### css
+```html
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+```
+- B3: Cấu hình toastr
+```js
+    toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+```
+- Sử dụng toastr.success("...")
+```js
+    toastr.success("Thành công")
+```
