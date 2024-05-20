@@ -3,6 +3,8 @@ package com.example.movieapp.service.impl;
 import com.example.movieapp.entity.Movie;
 import com.example.movieapp.entity.Review;
 import com.example.movieapp.entity.User;
+import com.example.movieapp.exception.BadRequestException;
+import com.example.movieapp.exception.ResourceNotFoundException;
 import com.example.movieapp.model.request.UpsertReviewRequest;
 import com.example.movieapp.repository.MovieRepository;
 import com.example.movieapp.repository.ReviewRepository;
@@ -36,7 +38,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         // kiểm tra xem movie có tồn tại hay không
         Movie movie = movieRepository.findById(request.getMovieId())
-                .orElseThrow(() -> new RuntimeException("Movie not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
 
         // tạo review
         Review review = Review.builder()
@@ -55,24 +57,24 @@ public class ReviewServiceImpl implements ReviewService {
     public Review updateReview(UpsertReviewRequest request, Integer id) {
         // kiểm tra xem review có tồn tại hay không
         Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Review not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
 
         User user = (User) session.getAttribute("currentUser");
 
 
         // kiểm tra xem movie có tồn tại hay không
         Movie movie = movieRepository.findById(request.getMovieId())
-                .orElseThrow(() -> new RuntimeException("Movie not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
 
         // kiểm tra xem review này có phải của user hay không
         if (!review.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Not review's owner");
+            throw new BadRequestException("Not review's owner");
         }
 
 
         // kiểm tra xem review này có thuộc movie hay không
         if (!review.getMovie().getId().equals(movie.getId())) {
-            throw new RuntimeException("Not review's movie");
+            throw new BadRequestException("Not review's movie");
         }
 
         // cập nhật review
@@ -87,14 +89,14 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReview(Integer id) {
         // kiểm tra xem review có tồn tại hay không
         Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Review not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
 
         User user = (User) session.getAttribute("currentUser");
 
 
         // kiểm tra xem review này có phải của user hay không
         if (!review.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Not review's owner");
+            throw new BadRequestException("Not review's owner");
         }
 
         reviewRepository.delete(review);

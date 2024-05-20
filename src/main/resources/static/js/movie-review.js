@@ -114,19 +114,42 @@ modalReviewEl.addEventListener('hidden.bs.modal', event => {
     idReviewEdit = null;
 })
 
+// validate form
+$('#form-review').validate({
+    rules: {
+        content: {
+            required: true,
+        }
+    },
+    messages: {
+        content: {
+            required: "Vui lòng nhập nội dung đánh giá"
+        }
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+    }
+});
+
 // submit form
 formReviewEl.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // TODO: validate các thông tin (sử dụng thư viện jquery validation
-
-    if (currentRating === 0) {
-        alert("vui lòng chọn số sao");
+    // Nếu form invalid thì return
+    if (!$("#form-review").valid()) {
         return;
     }
 
-    if (reviewContentEl.value.trim() === "") {
-        alert("nội dung đánh giá không được để trống");
+    if (currentRating === 0) {
+        toastr.warning("Vui lòng chọn số sao")
         return;
     }
 
@@ -152,8 +175,9 @@ const createReview = async (data) => {
         // đóng modal
         myModalReviewEl.hide();
         toastr.success("Đánh giá thành công")
-    } catch (e) {
-        console.log(e)
+    } catch (error) {
+        console.log(error)
+        toastr.error(error.response.data.message)
     }
 }
 
@@ -186,8 +210,10 @@ const editReview = async (data) => {
             renderReview(reviews);
         }
         myModalReviewEl.hide()
+        toastr.success("Sửa đánh giá thành công")
     } catch (error) {
         console.log(error)
+        toastr.error(error.response.data.message)
     }
 }
 
@@ -201,8 +227,10 @@ const deleteReview = async (id) => {
         const res = await axios.delete(`/api/reviews/${id}`)
         reviews = reviews.filter(review => review.id !== id);
         renderReview(reviews)
-    } catch (e) {
-        console.log(e)
+        toastr.success("Xóa đánh giá thành công")
+    } catch (error) {
+        console.log(error)
+        toastr.error(error.response.data.message)
     }
 }
 

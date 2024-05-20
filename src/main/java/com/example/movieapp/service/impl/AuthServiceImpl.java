@@ -1,6 +1,7 @@
 package com.example.movieapp.service.impl;
 
 import com.example.movieapp.entity.User;
+import com.example.movieapp.exception.BadRequestException;
 import com.example.movieapp.model.enums.UserRole;
 import com.example.movieapp.model.request.LoginRequest;
 import com.example.movieapp.model.request.RegisterRequest;
@@ -24,11 +25,11 @@ public class AuthServiceImpl implements AuthService {
     public void login(LoginRequest request) {
         // kiểm tra email xem co ton tai trong database khong
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Email  incorrect"));
+                .orElseThrow(() -> new BadRequestException("Email  incorrect"));
 
         // kiem ra xem password có khớp với password trong database khong
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Password incorrect");
+            throw new BadRequestException("Password incorrect");
         }
 
         // luu thông tin user vao trong session de su dung o cac request tiep theo
@@ -38,12 +39,12 @@ public class AuthServiceImpl implements AuthService {
     public User register(RegisterRequest request) {
         //kiểm tra email đã tồn tại hay chưa để đăng ký
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+            throw new BadRequestException("Email already exists");
         }
 
         // kiểm tra password có trung với confirmPassword hay không
         if (!request.getPassword().equals(request.getConfirmPassword())) {
-            throw new RuntimeException("Password and Confirm Password do not match");
+            throw new BadRequestException("Password and Confirm Password do not match");
         }
 
         User user = User.builder()
@@ -57,5 +58,10 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         userRepository.save(user);
         return user;
+    }
+
+    @Override
+    public void logout() {
+        session.setAttribute("currentUser", null);
     }
 }

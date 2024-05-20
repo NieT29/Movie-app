@@ -17,3 +17,20 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
+
+const logoutEl = document.querySelector(".logout")
+
+logoutEl.addEventListener("click", async (e) => {
+    e.preventDefault()
+
+    try {
+        let res = await axios.post("/api/auth/logout")
+        toastr.success("Đăng xuất thành công")
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 1000)
+    } catch (error) {
+        console.log(error)
+        toastr.error(error.response.data.message)
+    }
+})

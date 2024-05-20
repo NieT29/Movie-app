@@ -15,75 +15,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<header>
-    <div class="container bg-ct">
-        <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" th:href="@{/}">
-                <img src="https://motchilltv.ac/_ipx/s_150x35/logo.png" alt="logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link text-white" th:href="@{/}">Trang chủ</a>
-                    <a class="nav-link text-white" th:href="@{/phim-bo}">Phim bộ</a>
-                    <a class="nav-link text-white" th:href="@{/phim-le}">Phim lẻ</a>
-                    <a class="nav-link text-white" th:href="@{/phim-chieu-rap}">Phim chiếu rạp</a>
-                    <a class="nav-link text-white" th:href="@{/tin-tuc}">Blog</a>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-secondary" th:if="${session.currentUser == null}">
-                        <a th:href="@{/dang-nhap}" class="nav-link text-white">Đăng nhập</a>
-                    </button>
-                    <div th:if="${session.currentUser != null}">
-                        <div class="dropdown-center">
-                            <a class="btn bg-ct text-white dropdown-toggle" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false" th:text="${session.currentUser.name}">
-                                Dropdown link
-                            </a>
-
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li th:if="${ session.currentUser.getRole().toString() == 'ADMIN'}">
-                                    <a class="dropdown-item " href="#">
-                                        <i class="fa-solid fa-user-tie pe-1"></i>
-                                        Trang quản trị
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-regular fa-id-card pe-1"></i>
-                                        Thông tin cá nhân
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-clock-rotate-left pe-1"></i>
-                                        Lịch sử xem phim
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-heart pe-1"></i>
-                                        Phim yêu thích
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-right-from-bracket pe-1"></i>
-                                        Đăng xuất
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
-</header>
-
+<th:block th:replace="~{/web/fragments/header :: header}"></th:block>
 
 <section>
     <div class="container py-4 bg-ct border-top border-secondary border-opacity-50">
@@ -255,8 +187,10 @@
                             </div>
                             <form id="form-review">
                                 <div class="mb-3">
-                                    <label for="review-content" class="form-label">Nội dung đánh giá</label>
-                                    <textarea class="form-control" id="review-content" rows="3"></textarea>
+                                    <div class="form-group">
+                                        <label for="review-content" class="form-label">Nội dung đánh giá</label>
+                                        <textarea class="form-control" id="review-content" rows="3" name="content"></textarea>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary" id="btn-create-review">Tạo đánh giá
@@ -294,51 +228,7 @@
     </div>
 </section>
 
-<footer>
-    <div class="py-4 container border-top border-secondary border-opacity-50 bg-ct">
-        <div class="row">
-            <div class="col-4">
-                <img src="https://motchilltv.ac/_ipx/s_150x35/logo.png" alt="">
-                <p class="text-white mt-4">Motchill - Trang web xem phim trực tuyến miễn phí chất lượng cao với giao
-                    diện trực quan, tốc độ tải trang nhanh, cùng kho phim với hơn 10.000+ phim mới, phim hay, luôn cập
-                    nhật phim nhanh, hứa hẹn sẽ đem lại phút giây thư giãn cho bạn.</p>
-            </div>
-            <div class="col">
-                <div class="text-white">
-                    <h5>DANH MỤC</h5>
-                    <ul class="ps-0">
-                        <li class="mb-3">Phim Mới</li>
-                        <li class="mb-3">Phim Chiếu Rạp</li>
-                        <li class="mb-3">Phim Lẻ</li>
-                        <li class="mb-3">Phim Bộ</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col">
-                <div class="text-white">
-                    <h5>DANH MỤC</h5>
-                    <ul class="ps-0">
-                        <li class="mb-3">Phim Mới</li>
-                        <li class="mb-3">Phim Chiếu Rạp</li>
-                        <li class="mb-3">Phim Lẻ</li>
-                        <li class="mb-3">Phim Bộ</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col">
-                <div class="text-white">
-                    <h5>DANH MỤC</h5>
-                    <ul class="ps-0">
-                        <li class="mb-3">Phim Mới</li>
-                        <li class="mb-3">Phim Chiếu Rạp</li>
-                        <li class="mb-3">Phim Lẻ</li>
-                        <li class="mb-3">Phim Bộ</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+<th:block th:replace="~{/web/fragments/footer :: footer}"></th:block>
 
 <script th:inline="javascript">
     const movie = [[${movie}]];
@@ -353,6 +243,12 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+        integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+        integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://kit.fontawesome.com/d898046858.js" crossorigin="anonymous"></script>
