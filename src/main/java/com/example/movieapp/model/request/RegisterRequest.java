@@ -15,11 +15,14 @@ import lombok.experimental.FieldDefaults;
 public class RegisterRequest {
     @NotEmpty(message = "Tên không được để trống")
     String name;
+
     @NotEmpty(message = "Email không được để trống")
     @Email(message = "Email không đúng định dạng")
     String email;
+
     @NotEmpty(message = "Mật khẩu không được để trống")
     String password;
+
     @NotEmpty(message = "Mật khẩu nhập lại không được để trống")
     String confirmPassword;
 

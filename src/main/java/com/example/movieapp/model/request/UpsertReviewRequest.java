@@ -1,6 +1,7 @@
 package com.example.movieapp.model.request;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,7 +14,8 @@ import lombok.experimental.FieldDefaults;
 public class UpsertReviewRequest {
     @NotEmpty(message = "Nội dung đánh giá không được để trống")
     String content;
-    @NotEmpty(message = "Số sao không được để trống")
+    @NotNull(message = "Số sao không được để trống")
     Integer rating;
+
     Integer movieId;
 }
