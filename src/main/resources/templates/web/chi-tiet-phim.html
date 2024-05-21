@@ -67,7 +67,15 @@
                     <p>Rating: <span th:text="${movie.rating}" class="text-white">4.4</span>
                         <span class="star"><i class="fa-solid fa-star"></i></span>
                     </p>
-                    <button type="button" class="btn btn-danger">Xem Ngay <i class="fa-solid fa-play"></i></button>
+                    <button  type="button" class="btn btn-danger me-2">Xem Ngay <i class="fa-solid fa-play"></i></button>
+
+                    <button th:if="${session.currentUser == null}"  type="button" class="btn btn-outline-danger favorite-btn">Yêu Thích <i class="fa-solid fa-heart"></i></button>
+                    <button th:if="${session.currentUser != null}"  type="button" class="btn btn-outline-danger favorite-btn">
+                        <span th:if="${favorite != null}">Bỏ yêu thích</span>
+                        <span th:if="${favorite == null}">Yêu thích</span>
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -234,9 +242,13 @@
     const movie = [[${movie}]];
     let reviews = [[${reviews}]]
     const currentUser = [[${session.currentUser}]]
+
     console.log(currentUser)
     console.log(movie)
     console.log(reviews)
+
+    let favorite =[[${favorite}]]
+    console.log(favorite)
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -257,5 +269,6 @@
         crossorigin="anonymous"></script>
 <script src="/js/main.js"></script>
 <script src="/js/movie-review.js"></script>
+<script src="/js/movie-favorite.js"></script>
 </body>
 </html>

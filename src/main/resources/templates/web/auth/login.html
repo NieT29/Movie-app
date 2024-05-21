@@ -13,33 +13,52 @@
           integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: #424040;
+        }
+
+        header, footer {
+            flex-shrink: 0;
+        }
+
+        section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
 </head>
 <body>
 <th:block th:replace="~{/web/fragments/header :: header}"></th:block>
 
-
-<section>
-    <div class="container bg-ct p-5 container border-top border-secondary border-opacity-50 bg-ct">
-        <div class=" d-flex justify-content-center align-items-center flex-column px-4 mx-auto">
-            <div class="card-login d-flex flex-column justify-content-evenly">
-                <h3 class=" text-white text-center">Đăng nhập</h3>
-                <form id="form-login">
-                    <div class="mb-5 form-group">
-                        <label for="email" class="form-label text-white">Email</label>
-                        <input type="text" class="form-control" id="email" name="email"/>
-                    </div>
-                    <div class="mb-5 form-group">
-                        <label for="password" class="form-label text-white">Password</label>
-                        <input type="password" class="form-control" id="password" name="password"/>
-                    </div>
-                    <div class="mb-3 d-flex justify-content-between">
-                        <button type="submit" class="btn btn-secondary" id="btn-login">Đăng nhập</button>
-                        <button type="button" class="btn btn-secondary" id="btn-register">
-                            <a th:href="@{/dang-ky}" class="nav-link text-white">Đăng ký</a>
-                        </button>
-                    </div>
-                </form>
-            </div>
+<section >
+    <div class="container d-flex justify-content-center align-items-center py-5  bg-ct border-top border-secondary border-opacity-50 ">
+        <div class="card-login d-flex flex-column justify-content-evenly">
+            <h3 class="text-white text-center">Đăng nhập</h3>
+            <form id="form-login">
+                <div class="mb-5 form-group">
+                    <label for="email" class="form-label text-white">Email</label>
+                    <input type="text" class="form-control" id="email" name="email"/>
+                </div>
+                <div class="mb-5 form-group">
+                    <label for="password" class="form-label text-white">Password</label>
+                    <input type="password" class="form-control" id="password" name="password"/>
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                    <button type="submit" class="btn btn-secondary" id="btn-login">Đăng nhập</button>
+                    <button type="button" class="btn btn-secondary" id="btn-register">
+                        <a th:href="@{/dang-ky}" class="nav-link text-white">Đăng ký</a>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </section>
@@ -97,7 +116,8 @@
             $(element).removeClass('is-invalid');
         }
     });
-    // xu ly logic
+
+    // Xử lý logic
     const formLoginEl = document.getElementById("form-login");
     const emailEl = document.getElementById("email")
     const passwordEl = document.getElementById("password")
@@ -105,7 +125,7 @@
     formLoginEl.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // kiểm tra form đã validate không
+        // Kiểm tra form đã validate chưa
         if (!$('#form-login').valid()) {
             return;
         }

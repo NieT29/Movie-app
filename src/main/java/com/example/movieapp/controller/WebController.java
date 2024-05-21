@@ -3,6 +3,7 @@ package com.example.movieapp.controller;
 import com.example.movieapp.entity.*;
 import com.example.movieapp.model.enums.MovieType;
 import com.example.movieapp.service.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,12 @@ public class WebController {
     private ReviewService reviewService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private FavoriteService favoriteService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private HttpSession httpSession;
 
     @GetMapping("/")
     public String getHome(Model model) {
@@ -94,6 +101,10 @@ public class WebController {
         List<Genre> genres = movie.getGenres();
         String rdGenre = genres.get(random.nextInt(genres.size())).getName();
         List<Movie> relateMovies = movieService.getRelateMovies(id, rdGenre, true);
+
+        Favorite favorite = favoriteService.findFavoriteForCurrentUserAndMovie(id);
+
+        model.addAttribute("favorite", favorite);
         model.addAttribute("movie", movie);
         model.addAttribute("episodes", episodes);
         model.addAttribute("reviews", reviews);
@@ -118,5 +129,19 @@ public class WebController {
     @GetMapping("/dang-ky")
     public String getRegister() {
         return "web/auth/register";
+    }
+
+    @GetMapping("/thong-tin-ca-nhan")
+    public String getProfile() {
+        return "web/thong-tin-user";
+    }
+
+
+
+    @GetMapping("/danh-sach-yeu-thich")
+    public String getMoviesFavorite(Model model) {
+        List<Favorite> favorites = favoriteService.findByUser_IdOrderByCreatedAtDesc();
+        model.addAttribute("favorites", favorites);
+        return "web/phim-yeu-thich";
     }
 }

@@ -219,7 +219,7 @@ const editReview = async (data) => {
 
 // xóa review
 const deleteReview = async (id) => {
-    const confirm = window.confirm("Bạn có chắc muốn xóa không")
+    const confirm = window.confirm("Bạn có chắc muốn xóa không?")
     if (!confirm)
         return;
 

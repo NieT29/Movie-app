@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -46,7 +46,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" th:href="@{/thong-tin-ca-nhan}">
                                             <i class="fa-regular fa-id-card pe-1"></i>
                                             Thông tin cá nhân
                                         </a>
@@ -58,7 +58,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" th:href="@{/danh-sach-yeu-thich}">
                                             <i class="fa-solid fa-heart pe-1"></i>
                                             Phim yêu thích
                                         </a>

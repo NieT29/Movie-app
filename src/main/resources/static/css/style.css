@@ -197,3 +197,63 @@ a {
     background-color: #d8dcdf;
 }
 
+/* css profile*/
+.custom-nav-tabs {
+    display: flex;
+    border-bottom: 1px solid #444;
+}
+
+.custom-nav-link {
+    padding: 10px 15px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    background: #333;
+    color: #fff;
+    outline: none;
+}
+
+.custom-nav-link.active {
+    background-color: #555;
+    border-color: #444 #444 #000;
+    font-weight: bold;
+}
+
+.custom-nav-link:focus {
+    outline: none;
+}
+
+.custom-nav-link[aria-disabled="true"] {
+    color: #777;
+    cursor: not-allowed;
+}
+
+
+
+.custom-tab-pane {
+    display: none;
+}
+
+.custom-tab-pane.active {
+    display: block;
+}
+
+.card-profile {
+    background-color: #27272A;
+    padding: 20px 40px;
+    border-radius: 10px;
+    height: 560px;
+    width: 700px;
+}
+
+.card-change-password {
+    background-color: #27272A;
+    padding: 20px 40px;
+    border-radius: 10px;
+    height: 550px;
+    width: 700px;
+
+}
+
+
+

@@ -5,18 +5,17 @@ import com.example.movieapp.model.request.UpsertReviewRequest;
 import com.example.movieapp.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/reviews")
 // api trả về json nên có /api
-public class MovieApi {
+public class ReviewApi {
     private final ReviewService reviewService;
 
     // Tạo review
