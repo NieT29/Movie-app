@@ -65,6 +65,7 @@ public class BlogServiceImpl implements BlogService {
                 .title(request.getTitle())
                 .slug(slugify.slugify(request.getTitle()))
                 .content(request.getContent())
+                .thumbnail("https://placehold.co/600x400?text=" + String.valueOf(request.getTitle().charAt(0)).toUpperCase())
                 .description(request.getDescription())
                 .status(request.getStatus())
                 .createdAt(LocalDateTime.now())

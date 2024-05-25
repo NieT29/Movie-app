@@ -273,11 +273,21 @@
 
 
 <script>
-    $('#content').summernote({
-        height: 500,                 // set editor height
-        minHeight: null,             // set minimum height of editor
-        maxHeight: null,             // set maximum height of editor
-        focus: true                  // set focus to editable area after initializing summernote
+    // $('#content').summernote({
+    //     height: 500,
+    //     minHeight: null,
+    //     maxHeight: null,
+    //     focus: true
+    // });
+
+    $(document).ready(function () {
+        $('#content').summernote({
+            placeholder: 'Enter Content',
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true                  // set focus to editable area after initializing summernote
+        }).summernote('code', false);
     });
 
     // validate
@@ -318,14 +328,11 @@
     });
 
     const titleEl = document.getElementById("title")
-    let contentEl = $('#content').summernote('code', false);
+    let contentEl = document.getElementById("content")
     const statusEl = document.getElementById("status")
     const descriptionEl = document.getElementById("description")
     const btnCreate = document.getElementById("btn-create")
 
-    $('#content').on('summernote.blur', function() {
-        contentEl = $('#content').summernote('code');
-    });
 
     btnCreate.addEventListener("click", async (e) => {
         e.preventDefault()
@@ -336,7 +343,7 @@
 
         const data = {
             title: titleEl.value,
-            content: contentEl,
+            content: $('#content').summernote('code'),
             description: descriptionEl.value,
             status: statusEl.value === "1" // chuyển đổi 1 thành true, 0 thành false
         }
@@ -349,7 +356,7 @@
             }, 1000)
         } catch (error) {
             console.log(error)
-            toastr.error(error.data.message)
+            toastr.error(error.response.data.message)
         }
     })
 </script>
