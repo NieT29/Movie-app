@@ -3,6 +3,7 @@ package com.example.movieapp.service.impl;
 import com.example.movieapp.entity.Favorite;
 import com.example.movieapp.entity.Movie;
 import com.example.movieapp.entity.User;
+import com.example.movieapp.exception.BadRequestException;
 import com.example.movieapp.exception.ResourceNotFoundException;
 import com.example.movieapp.model.request.FavoriteRequest;
 import com.example.movieapp.repository.FavoriteRepository;
@@ -77,7 +78,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
         // kiểm tra xem người dùng đang thao tác có phải là chủ sở hữu của phim yêu thích không
         if (!favorite.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("User not authorized to update favorite");
+            throw new BadRequestException("User not authorized to update favorite");
         }
 
         favoriteRepository.delete(favorite);
