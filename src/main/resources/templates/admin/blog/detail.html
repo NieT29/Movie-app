@@ -384,7 +384,7 @@
         }
 
         try {
-            const res = await axios.put(`/api/blogs/${blog.id}`, data);
+            const res = await axios.put(`/api/admin/blogs/${blog.id}`, data);
             toastr.success("Cập nhật blog thành công")
             setTimeout(() => {
                 window.location.href = "/admin/blogs/own-blogs";
@@ -400,7 +400,7 @@
         if (!confirm)
             return;
         try {
-            const res = await await axios.delete(`/api/blogs/${blog.id}`)
+            const res = await await axios.delete(`/api/admin/blogs/${blog.id}`)
             toastr.success("Xóa blog thành công ")
             setTimeout(() => {
                 window.location.href = "/admin/blogs/own-blogs";

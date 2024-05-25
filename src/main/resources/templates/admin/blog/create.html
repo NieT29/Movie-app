@@ -349,7 +349,7 @@
         }
 
         try {
-            let res = await axios.post("/api/blogs", data)
+            let res = await axios.post("/api/admin/blogs", data)
             toastr.success("Tạo blog thành công")
             setTimeout(() => {
                 window.location.href = "/admin/blogs/own-blogs";

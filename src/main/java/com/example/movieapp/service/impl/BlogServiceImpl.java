@@ -8,6 +8,7 @@ import com.example.movieapp.exception.ResourceNotFoundException;
 import com.example.movieapp.model.request.UpsertBlogRequest;
 import com.example.movieapp.repository.BlogRepository;
 import com.example.movieapp.service.BlogService;
+import com.example.movieapp.service.FileService;
 import com.github.slugify.Slugify;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -26,6 +30,8 @@ public class BlogServiceImpl implements BlogService {
     private BlogRepository blogRepository;
     @Autowired
     private HttpSession session;
+    @Autowired
+    private FileService fileService;
 
     @Override
     public Page<Blog> getBlogByType(Boolean status, int page, int pageSize) {
@@ -116,6 +122,23 @@ public class BlogServiceImpl implements BlogService {
             throw new BadRequestException("User are not allowed to delete other people's blogs");
         }
         blogRepository.delete(blog);
+    }
+
+    @Override
+    public String uploadThumbnail(Integer id, MultipartFile file) {
+        Blog blog = blogRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
+
+        try {
+            Map data = fileService.uploadFile(file);
+            String url = (String) data.get("url");
+            blog.setThumbnail(url);
+            blogRepository.save(blog);
+
+            return url;
+        } catch (IOException e) {
+            throw  new RuntimeException("Error uploading file");
+        }
     }
 
 }

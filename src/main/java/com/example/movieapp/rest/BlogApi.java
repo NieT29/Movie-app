@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/blogs")
+@RequestMapping("/api/admin/blogs")
 public class BlogApi {
     private final BlogService blogService;
 
@@ -28,10 +29,15 @@ public class BlogApi {
         return ResponseEntity.ok(blog);
     }
 
-    // Xóa review - DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBlog(@PathVariable Integer id) {
         blogService.deleteBlog(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/upload-thumbnail")
+    public ResponseEntity<?> upLoadThumbnail(@PathVariable Integer id,
+                                             @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok(blogService.uploadThumbnail(id, file));
     }
 }
