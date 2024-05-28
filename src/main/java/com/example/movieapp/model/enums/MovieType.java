@@ -1,7 +1,13 @@
 package com.example.movieapp.model.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum MovieType {
-    PHIM_LE,
-    PHIM_BO,
-    PHIM_CHIEU_RAP
+    PHIM_LE("Phim lẻ"),
+    PHIM_BO("Phim bộ"),
+    PHIM_CHIEU_RAP("Phim chiếu rạp");
+    private final String value;
 }

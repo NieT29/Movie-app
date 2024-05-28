@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>Admin Blog Create</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -100,19 +100,19 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="./blog-index.html" class="nav-link">
+                                <a th:href="@{/admin/blogs}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Tất cả bài viết</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./blog-yourself.html" class="nav-link">
+                                <a th:href="@{/admin/blogs/own-blogs}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Bài viết của tôi</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./blog-create.html" class="nav-link">
+                                <a th:href="@{/admin/blogs/create}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Tạo bài viết</p>
                                 </a>
@@ -129,13 +129,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="pages/UI/general.html" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Danh sách user</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages/UI/icons.html" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Tạo user</p>
                                 </a>
