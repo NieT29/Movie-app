@@ -18,6 +18,7 @@ public class MovieController {
     private final DirectorService directorService;
     private final GenreService genreService;
     private final MovieService movieService;
+    private final EpisodeService episodeService;
 
     @GetMapping
     public String getIndexPage(Model model) {
@@ -44,6 +45,9 @@ public class MovieController {
         model.addAttribute("genres", genreService.getAllGenres());
         model.addAttribute("movieTypes", MovieType.values());
         model.addAttribute("movie", movieService.getMovieById(id));
+
+        // trả về ds tập phim của movie (sắp xếp theo display order tâng dần)
+        model.addAttribute("episodes", episodeService.getEpisodeListOfMovie(id));
         return "admin/movie/detail";
     }
 }

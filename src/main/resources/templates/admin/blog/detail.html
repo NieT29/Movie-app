@@ -1,149 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{admin/layout/layout  ::  layout(~{:: title}, ~{:: #css}, ~{:: .content-wrapper}, ~{:: #js})}">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Admin Blog Detail</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/admin-assets/plugins/fontawesome-free/css/all.min.css" />
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
 
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/admin-assets/dist/css/adminlte.min.css" />
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="/admin-assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
 
-    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css" />
+    <th:block id="css">
+        <!-- Summernote -->
+        <link rel="stylesheet" href="/admin-assets/plugins/summernote/summernote-bs4.min.css"/>
 
-    <!-- Summernote -->
-    <link rel="stylesheet" href="/admin-assets/plugins/summernote/summernote-bs4.min.css"/>
-
-    <!--  Toastr  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
-          integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-
-    <link rel="stylesheet" href="/admin-assets/plugins/select2/css/select2.min.css" />
-    <link rel="stylesheet" href="/admin-assets/dist/css/style.css">
+        <link rel="stylesheet" href="/admin-assets/plugins/select2/css/select2.min.css" />
+        <link rel="stylesheet" href="/admin-assets/dist/css/style.css">
+    </th:block>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-        </ul>
-
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-            <!-- Notifications Dropdown Menu -->
-            <li class="nav-item dropdown">
-                <a class="nav-link py-0 d-flex align-items-center" data-toggle="dropdown" href="#">
-                    <div class="user-panel">
-                        <div class="image">
-                            <img src="/admin-assets/dist/img/user2-160x160.jpg" class="img-circle border" alt="User Image">
-                        </div>
-                    </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                    <a href="#" class="dropdown-item">
-                        <span class="text-muted">Trang chủ</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <span class="text-muted">Đăng xuất</span>
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="./index.html" class="brand-link">
-            <img src="/admin-assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                 style="opacity: 0.8" />
-            <span class="brand-text font-weight-light">Admin</span>
-        </a>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-chart-pie"></i>
-                            <p>
-                                Quản lý bài viết
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a th:href="@{/admin/blogs}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Tất cả bài viết</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a th:href="@{/admin/blogs/own-blogs}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Bài viết của tôi</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a th:href="@{/admin/blogs/create}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Tạo bài viết</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tree"></i>
-                            <p>
-                                Quản lý user
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Danh sách user</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Tạo user</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -246,172 +121,144 @@
     </div>
 </div>
 
-<!-- jQuery -->
-<script src="/admin-assets/plugins/jquery/jquery.min.js"></script>
 
-<!-- Bootstrap 4 -->
-<script src="/admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- overlayScrollbars -->
-<script src="/admin-assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<th:block id="js">
+    <!-- Summernote -->
+    <script src="/admin-assets/plugins/summernote/summernote-bs4.min.js"></script>
 
-<!-- AdminLTE App -->
-<script src="/admin-assets/dist/js/adminlte.js"></script>
 
-<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-<script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+    <script src="/admin-assets/js/main.js"></script>
 
-<script src="/admin-assets/plugins/select2/js/select2.full.min.js"></script>
+    <script th:inline="javascript">
+        const blog = [[${blog}]]
+    </script>
 
-<!-- Summernote -->
-<script src="/admin-assets/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let content = $('#content').data('content');
+            $('#content').summernote({
+                placeholder: 'Enter Content',
+                height: 300,                 // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+                focus: false                  // set focus to editable area after initializing summernote
+            }).summernote('code',  content);
+        });
 
-<!-- Toastr -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!-- Validation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
-        integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
-        integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!-- axios -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-<script src="/admin-assets/js/main.js"></script>
-
-<script th:inline="javascript">
-    const blog = [[${blog}]]
-</script>
-
-<script >
-    $(document).ready(function () {
-        let content = $('#content').data('content');
-        $('#content').summernote({
-            placeholder: 'Enter Content',
-            height: 300,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: false                  // set focus to editable area after initializing summernote
-        }).summernote('code',  content);
-    });
-
-    // validation
-    $('#form-blog').validate({
-        rules: {
-            title: {
-                required: true,
+        // validation
+        $('#form-blog').validate({
+            rules: {
+                title: {
+                    required: true,
+                },
+                content: {
+                    required: true,
+                },
+                description: {
+                    required: true,
+                }
             },
-            content: {
-                required: true,
+            messages: {
+                title: {
+                    required: "Vui lòng nhập tiêu đề"
+                },
+                content: {
+                    required: "Vui lòng nhập nội dung bài viết"
+                },
+                description: {
+                    required: "Vui lòng nhập mô tả bài viết"
+                }
             },
-            description: {
-                required: true,
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
             }
-        },
-        messages: {
-            title: {
-                required: "Vui lòng nhập tiêu đề"
-            },
-            content: {
-                required: "Vui lòng nhập nội dung bài viết"
-            },
-            description: {
-                required: "Vui lòng nhập mô tả bài viết"
+        });
+
+        const titleEl = document.getElementById("title")
+        let contentEl = document.getElementById("content")
+        const statusEl = document.getElementById("status")
+        const descriptionEl = document.getElementById("description")
+        const btnUpdate = document.getElementById("btn-update")
+        const btnDelete = document.getElementById("btn-delete")
+
+        btnUpdate.addEventListener("click", async (e) => {
+            e.preventDefault()
+
+            if (!$('#form-blog').valid()){
+                return;
             }
-        },
-        errorElement: 'span',
-        errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function (element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-        },
-        unhighlight: function (element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-        }
-    });
 
-    const titleEl = document.getElementById("title")
-    let contentEl = document.getElementById("content")
-    const statusEl = document.getElementById("status")
-    const descriptionEl = document.getElementById("description")
-    const btnUpdate = document.getElementById("btn-update")
-    const btnDelete = document.getElementById("btn-delete")
+            const data = {
+                title: titleEl.value,
+                content: contentEl.value,
+                description: descriptionEl.value,
+                status : statusEl.value === "1"
+            }
 
-    btnUpdate.addEventListener("click", async (e) => {
-        e.preventDefault()
+            try {
+                const res = await axios.put(`/api/admin/blogs/${blog.id}`, data);
+                toastr.success("Cập nhật blog thành công")
+                setTimeout(() => {
+                    window.location.href = "/admin/blogs/own-blogs";
+                }, 1000)
+            } catch (error) {
+                console.log(error)
+                toastr.error(error.response.data.message)
+            }
+        })
 
-        if (!$('#form-blog').valid()){
-            return;
-        }
+        btnDelete.addEventListener("click", async (e) => {
+            const confirm = window.confirm("Bạn có chắc muốn xóa không?")
+            if (!confirm)
+                return;
+            try {
+                const res = await await axios.delete(`/api/admin/blogs/${blog.id}`)
+                toastr.success("Xóa blog thành công ")
+                setTimeout(() => {
+                    window.location.href = "/admin/blogs/own-blogs";
+                }, 1000)
+            } catch (error) {
+                console.log(error)
+                toastr.error(error.data.message)
+            }
+        })
 
-        const data = {
-            title: titleEl.value,
-            content: contentEl.value,
-            description: descriptionEl.value,
-            status : statusEl.value === "1"
-        }
+        // upload anh
+        const inputThumbnailEL = document.getElementById("input-thumbnail");
+        const thumbnailEl = document.getElementById("thumbnail");
 
-        try {
-            const res = await axios.put(`/api/admin/blogs/${blog.id}`, data);
-            toastr.success("Cập nhật blog thành công")
-            setTimeout(() => {
-                window.location.href = "/admin/blogs/own-blogs";
-            }, 1000)
-        } catch (error) {
-            console.log(error)
-            toastr.error(error.response.data.message)
-        }
-    })
+        inputThumbnailEL.addEventListener("change", async (event) => {
+            // lấy file upload
+            const files = event.target.files
 
-    btnDelete.addEventListener("click", async (e) => {
-        const confirm = window.confirm("Bạn có chắc muốn xóa không?")
-        if (!confirm)
-            return;
-        try {
-            const res = await await axios.delete(`/api/admin/blogs/${blog.id}`)
-            toastr.success("Xóa blog thành công ")
-            setTimeout(() => {
-                window.location.href = "/admin/blogs/own-blogs";
-            }, 1000)
-        } catch (error) {
-            console.log(error)
-            toastr.error(error.data.message)
-        }
-    })
+            // tạo đối tượng form data
+            const formData = new FormData()
+            formData.append("file", files[0])
 
-    // upload anh
-    const inputThumbnailEL = document.getElementById("input-thumbnail");
-    const thumbnailEl = document.getElementById("thumbnail");
+            // gọi api
+            try {
+                let res = await axios.post(`/api/admin/blogs/${blog.id}/upload-thumbnail`, formData)
+                console.log(res)
 
-    inputThumbnailEL.addEventListener("change", async (event) => {
-        // lấy file upload
-        const files = event.target.files
+                thumbnailEl.src = res.data
+                toastr.success("Upload thumbnail thành công")
+            } catch (error) {
+                console.log(error)
+                toastr.error(error.data.message)
+            }
+        })
 
-        // tạo đối tượng form data
-        const formData = new FormData()
-        formData.append("file", files[0])
-
-        // gọi api
-        try {
-            let res = await axios.post(`/api/admin/blogs/${blog.id}/upload-thumbnail`, formData)
-            console.log(res)
-
-            thumbnailEl.src = res.data
-            toastr.success("Upload thumbnail thành công")
-        } catch (error) {
-            console.log(error)
-            toastr.error(error.data.message)
-        }
-    })
-
-</script>
+    </script>
+</th:block>
 </body>
 
 </html>

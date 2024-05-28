@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Admin Movie Create</title>
+    <title>Admin Movie Detail</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -299,6 +299,56 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>Danh sách tập phim</h4>
+
+                                <button type="button" class="btn btn-info px-4 mb-3" id="btn-create-episode">
+                                    Tạo tập phim
+                                </button>
+
+                                <table class="table table-bordered table-hover" >
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên tập phim</th>
+                                        <th>Video URL</th>
+                                        <th>Thời lượng</th>
+                                        <th>Ngày tạo</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="episode : ${episodes}">
+                                        <td th:text="${episode.episodeOrder}"></td>
+                                        <td th:text="${episode.name}"></td>
+                                        <td th:text="${episode.videoUrl}"></td>
+                                        <td th:text="${episode.duration}"></td>
+                                        <td th:text="${#temporals.format(episode.createdAt, 'dd-MM-yyyy')}"></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary">
+                                                <i class="fas fa-upload"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-success">
+                                                <i class="fas fa-play-circle"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-warning text-white">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
     </div>
