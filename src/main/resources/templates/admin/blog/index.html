@@ -102,19 +102,20 @@
     <script src="/admin-assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="/admin-assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="/admin-assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script>
+        $('#table-blog').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    </script>
 </th:block>
 
-<script>
-    $('#table-blog').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-    });
-</script>
+
 </body>
 
 </html>

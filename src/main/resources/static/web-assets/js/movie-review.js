@@ -98,6 +98,7 @@ const myModalReviewEl = new bootstrap.Modal(modalReviewEl, {
 
 const btnOpenModal = document.querySelector(".btn-open-modal")
 btnOpenModal.addEventListener("click", () => {
+    console.log("mở")
     myModalReviewEl.show();
     modalReviewTitleEl.textContent = `Viết đánh giá`;
     btnCreateReviewEl.textContent = `Tạo đánh giá`

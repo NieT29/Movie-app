@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EpisodeRepository extends JpaRepository<Episode, Integer> {
-    List<Episode> findByMovie_IdOrderByEpisodeOrder(Integer movieId);
+    List<Episode> findByMovie_IdOrderByEpisodeOrderAsc(Integer movieId);
+
 }

@@ -19,7 +19,7 @@ public class MovieApi {
     private final MovieService movieService;
 
     @PostMapping
-    public ResponseEntity<?> createBlog(@Valid @RequestBody UpsertMovieRequest request) {
+    public ResponseEntity<?> createMovie(@Valid @RequestBody UpsertMovieRequest request) {
         Movie movie = movieService.createMovie(request);
         return new ResponseEntity<>(movie, HttpStatus.CREATED);
     }
