@@ -13,6 +13,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class FileService {
     private final String UPLOAD_FOLDER = "upload_image";
+    private final String UPLOAD_FOLDER_VIDEO = "upload_video";
     private final Cloudinary cloudinary;
 
     public Map uploadFile(MultipartFile file) throws IOException {
@@ -26,7 +27,7 @@ public class FileService {
         return cloudinary.uploader().upload(file.getBytes(),
                 ObjectUtils.asMap(
                         "resource_type", "video",
-                        "folder", UPLOAD_FOLDER
+                        "folder", UPLOAD_FOLDER_VIDEO
                 ));
     }
 }
