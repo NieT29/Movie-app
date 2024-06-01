@@ -1,6 +1,7 @@
 package com.example.movieapp.service;
 
 import com.example.movieapp.entity.Blog;
+import com.example.movieapp.entity.User;
 import com.example.movieapp.model.request.UpsertBlogRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,4 +24,7 @@ public interface BlogService {
     void deleteBlog(Integer id);
 
     String uploadThumbnail(Integer id, MultipartFile file);
+
+
+    List<Blog> getBlogsCreatedInMonth();
 }

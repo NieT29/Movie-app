@@ -1,86 +1,66 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{web/layout/layout  ::  layout(~{:: title}, ~{:: #css}, ~{:: #content-wrapper}, ~{:: #js})}">
 <head>
-    <meta charset="UTF-8" >
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block id="css"></th:block>
     <title>Danh sách blog</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
-          integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" th:href="@{/web-assets/css/style.css}">
+
 </head>
 <body>
-<th:block th:replace="~{/web/fragments/header :: header}"></th:block>
 
-<section >
-    <div class="container bg-ct py-4 border-top border-secondary border-opacity-50 ">
-        <div class=" mb-4 text-white">
-            <h4 class="text-center">BLOG</h4>
-        </div>
-
-        <div class="row">
-            <div class="col-3" th:each="blog : ${pageData.getContent()}">
-                <a th:href="@{/tin-tuc/{id}/{slug} (id=${blog.id}, slug=${blog.slug})}">
-                    <div class=" p-2 rounded text-black blog-item">
-                        <div class="blog-thumbnail rounded overflow-hidden ">
-                            <img class="w-100 h-100" th:src="${blog.thumbnail}" alt="">
-                        </div>
-                        <div class="p-2 blog-introduce">
-                            <h5 th:text="${blog.title}"></h5>
-                            <p class="mb-2 blog-time" th:text="${#temporals.format(blog.createdAt, 'dd-MM-yyyy')}"></p>
-                            <p class="mb-0 " th:text="${blog.description}"></p>
-                        </div>
-                    </div>
-                </a>
+<th:block id="content-wrapper">
+    <section >
+        <div class="container bg-ct py-4 border-top border-secondary border-opacity-50 ">
+            <div class=" mb-4 text-white">
+                <h4 class="text-center">BLOG</h4>
             </div>
+
+            <div class="row">
+                <div class="col-3" th:each="blog : ${pageData.getContent()}">
+                    <a th:href="@{/tin-tuc/{id}/{slug} (id=${blog.id}, slug=${blog.slug})}">
+                        <div class=" p-2 rounded text-black blog-item">
+                            <div class="blog-thumbnail rounded overflow-hidden ">
+                                <img class="w-100 h-100" th:src="${blog.thumbnail}" alt="">
+                            </div>
+                            <div class="p-2 blog-introduce">
+                                <h5 th:text="${blog.title}"></h5>
+                                <p class="mb-2 blog-time" th:text="${#temporals.format(blog.createdAt, 'dd-MM-yyyy')}"></p>
+                                <p class="mb-0 " th:text="${blog.description}"></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4" id="pagination" th:if="${pageData.getTotalPages() != 1}">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/tin-tuc (page=${currentPage - 1})}">
+                                <i class="fa-solid fa-caret-left"></i>
+                            </a>
+                        </li>
+
+                        <li class="page-item"
+                            th:each="number: ${#numbers.sequence(1, pageData.getTotalPages())}"
+                            th:classappend="${currentPage == number ? 'active' : ''}"
+                        >
+                            <a class="page-link" th:href="@{/tin-tuc (page=${number})}" th:text="${number}">1</a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/tin-tuc (page=${currentPage + 1})}">
+                                <i class="fa-solid fa-caret-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
         </div>
+    </section>
+</th:block>
 
-        <div class="d-flex justify-content-center mt-4" id="pagination" th:if="${pageData.getTotalPages() != 1}">
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
-                        <a class="page-link" th:href="@{/tin-tuc (page=${currentPage - 1})}">
-                            <i class="fa-solid fa-caret-left"></i>
-                        </a>
-                    </li>
-
-                    <li class="page-item"
-                        th:each="number: ${#numbers.sequence(1, pageData.getTotalPages())}"
-                        th:classappend="${currentPage == number ? 'active' : ''}"
-                    >
-                        <a class="page-link" th:href="@{/tin-tuc (page=${number})}" th:text="${number}">1</a>
-                    </li>
-
-                    <li class="page-item" th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
-                        <a class="page-link" th:href="@{/tin-tuc (page=${currentPage + 1})}">
-                            <i class="fa-solid fa-caret-right"></i></a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-
-
-    </div>
-</section>
-
-<th:block th:replace="~{/web/fragments/footer :: footer}"></th:block>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://kit.fontawesome.com/d898046858.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-<script src="/web-assets/js/main.js"></script>
+<th:block id="js"></th:block>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.example.movieapp.service;
 
+import com.example.movieapp.entity.Movie;
 import com.example.movieapp.entity.User;
 import com.example.movieapp.model.request.UpdatePasswordRequest;
 import com.example.movieapp.model.request.UpdateProfileUserRequest;
@@ -12,4 +13,7 @@ public interface UserService {
 
 
     void updatePassword(UpdatePasswordRequest request);
+
+    List<User> getAllUsers();
+    List<User> getUsersCreatedInMonth();
 }

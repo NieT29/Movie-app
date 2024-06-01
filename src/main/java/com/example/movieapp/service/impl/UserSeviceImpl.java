@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,5 +71,17 @@ public class UserSeviceImpl implements UserService {
         currentUser.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(currentUser);
 
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getUsersCreatedInMonth() {
+        LocalDateTime startDate = LocalDate.now().withDayOfMonth(1).atStartOfDay();
+        LocalDateTime endDate = LocalDateTime.now();
+        return userRepository.findUsersCreatedBetween(startDate, endDate);
     }
 }

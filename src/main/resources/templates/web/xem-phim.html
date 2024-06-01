@@ -4,9 +4,9 @@
 <head>
     <title>Chi tiết phim</title>
     <th:block id="css"></th:block>
+
 </head>
 <body>
-
 <th:block id="content-wrapper">
     <section>
         <div class="container py-4 bg-ct border-top border-secondary border-opacity-50">
@@ -26,6 +26,31 @@
                         </li>
                     </ol>
                 </nav>
+            </div>
+            <div id="screen">
+                <video th:src="${currentEpisode.videoUrl}" width="100%" controls>
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            <div class="episode mb-3" th:if="${movie.type.toString() == 'PHIM_BO' && episodes.size() > 0}">
+                <div class="mb-3">
+                    <button type="button" class="btn text-white fw-bold" style="background-color: #A3765D;">DANH SÁCH TẬP
+                    </button>
+                </div>
+                <div class="p-4 list-episode rounded-1" >
+                    <p class="text-white">DANH SÁCH TẬP</p>
+                    <div>
+                        <th:block th:each="episode : ${episodes}">
+                            <button type="button" class="btn btn-sm"
+                                    th:classappend="${episode.episodeOrder == currentEpisode.episodeOrder ? 'btn-danger' : 'btn-secondary'}">
+                                <a th:href="@{/xem-phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug}, tap=${episode.episodeOrder})}"
+                                   class="text-white" th:text="${episode.name}">
+                                    Tập 1
+                                </a>
+                            </button>
+                        </th:block>
+                    </div>
+                </div>
             </div>
             <div class="row mb-5">
                 <div class="col-4">
@@ -73,25 +98,6 @@
                             <span class="star"><i class="fa-solid fa-star"></i></span>
                         </p>
 
-                        <th:block th:if="${movie.type.toString() == 'PHIM_BO' && episodes.size() > 0}">
-                            <a th:href="@{/xem-phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug}, tap=${episodes.get(0).episodeOrder})}">
-                                <button  type="button" class="btn btn-danger me-2">
-                                    Xem Ngay
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </a>
-                        </th:block>
-
-                        <th:block th:if="${(movie.type.toString() == 'PHIM_LE' || movie.type.toString() == 'PHIM_CHIEU_RAP') && episodes.size() > 0}">
-                            <a th:href="@{/xem-phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug}, tap='full')}">
-                                <button  type="button" class="btn btn-danger me-2">
-                                    Xem Ngay
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </a>
-                        </th:block>
-
-
                         <button th:if="${session.currentUser == null}"  type="button" class="btn btn-outline-danger favorite-btn">Yêu Thích <i class="fa-solid fa-heart"></i></button>
                         <button th:if="${session.currentUser != null}"  type="button" class="btn btn-outline-danger favorite-btn">
                             <span th:if="${favorite != null}">Bỏ yêu thích</span>
@@ -103,25 +109,6 @@
                 </div>
             </div>
 
-            <div class="episode mb-3" th:if="${movie.type.toString() == 'PHIM_BO' && episodes.size() > 0}">
-                <div class="mb-3">
-                    <button type="button" class="btn text-white fw-bold" style="background-color: #A3765D;">DANH SÁCH TẬP
-                    </button>
-                </div>
-                <div class="p-4 list-episode rounded-1" >
-                    <p class="text-white">DANH SÁCH TẬP</p>
-                    <div>
-                        <th:block th:each="episode : ${episodes}">
-                            <button type="button" class="btn btn-secondary btn-sm">
-                                <a th:href="@{/xem-phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug}, tap=${episode.episodeOrder})}"
-                                   class="text-white" th:text="${episode.name}">
-                                    Tập 1
-                                </a>
-                            </button>
-                        </th:block>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -263,6 +250,9 @@
     </section>
 </th:block>
 
+
+
+
 <th:block id="js">
     <script th:inline="javascript">
         const movie = [[${movie}]];
@@ -280,5 +270,7 @@
     <script src="/web-assets/js/movie-review.js"></script>
     <script src="/web-assets/js/movie-favorite.js"></script>
 </th:block>
+
+
 </body>
 </html>

@@ -20,6 +20,16 @@ a {
     text-decoration: none;
 }
 
+#main-menu .navbar-nav a.active {
+    color: #da966e !important;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    color: white;
+}
+
+.breadcrumb-item.active {
+    color: #da966e ;
+}
 .bg-ct {
     background-color: #151414;
 }

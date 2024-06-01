@@ -101,4 +101,15 @@ public class EpisodeServiceImpl implements EpisodeService {
             throw new RuntimeException("Error uploading video");
         }
     }
+
+    @Override
+    public Episode getEpisode(Integer movieId, String tap) {
+        if (tap.equals("full")) {
+            return episodeRepository.findByMovie_IdAndMovie_StatusAndEpisodeOrder(movieId,true, 1)
+                    .orElse(null);
+        } else {
+            return episodeRepository.findByMovie_IdAndMovie_StatusAndEpisodeOrder(movieId,true, Integer.parseInt(tap))
+                    .orElse(null);
+        }
+    }
 }

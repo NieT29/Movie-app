@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 
@@ -140,4 +143,13 @@ public class MovieServiceImpl implements MovieService {
             throw new RuntimeException("Error uploading file");
         }
     }
+
+    @Override
+    public List<Movie> getMoviesCreatedInMonth() {
+        LocalDateTime startDate = LocalDate.now().withDayOfMonth(1).atStartOfDay();
+        LocalDateTime endDate = LocalDateTime.now();
+        return movieRepository.findMoviesCreatedBetween(startDate, endDate);
+    }
+
+
 }

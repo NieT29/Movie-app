@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,4 +41,10 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     Page<Movie> findByStatus(Boolean status, Pageable pageable);
     Page<Movie> findByTypeAndStatus(MovieType movieType, Boolean status, Pageable pageable);
     Page<Movie> findByStatusOrderByRatingDesc(Boolean status, Pageable pageable);
+
+
+    @Query("SELECT m FROM Movie m WHERE m.createdAt BETWEEN :startDate AND :endDate")
+    List<Movie> findMoviesCreatedBetween(LocalDateTime startDate, LocalDateTime endDate);
+
+
 }

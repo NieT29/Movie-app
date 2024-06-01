@@ -1,5 +1,19 @@
 console.log("from mainjs")
 
+function activeMenu() {
+    // Lây đường dẫn hiện tại
+    let path = window.location.pathname;
+
+    // Xử lý active menu
+    const menuItems = document.querySelectorAll('#main-menu .navbar-nav .nav-link')
+    menuItems.forEach(function (menu) {
+        if (menu.getAttribute('href') === path) {
+            menu.classList.add('active')
+        }
+    })
+}
+activeMenu()
+
 toastr.options = {
     "closeButton": false,
     "debug": false,

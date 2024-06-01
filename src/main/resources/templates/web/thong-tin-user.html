@@ -1,184 +1,160 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{web/layout/layout  ::  layout(~{:: title}, ~{:: #css}, ~{:: #content-wrapper}, ~{:: #js})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Đăng ký</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
-          integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" th:href="@{/web-assets/css/style.css}">
-    <style>
-        html, body {
-            height: 100%;
-        }
+    <th:block id="css">
+        <style>
+            html, body {
+                height: 100%;
+            }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            background-color: #424040;
-        }
+            body {
+                display: flex;
+                flex-direction: column;
+                background-color: #424040;
+            }
 
-        header, footer {
-            flex-shrink: 0;
-        }
+            header, footer {
+                flex-shrink: 0;
+            }
 
-        section {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-        input[readonly] {
-            pointer-events: none;
-            background-color: #a2a0a0;
-        }
+            section {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+            }
+            input[readonly] {
+                pointer-events: none;
+                background-color: #a2a0a0;
+            }
 
-        input[readonly]:focus {
-            outline: none;
-        }
-    </style>
+            input[readonly]:focus {
+                outline: none;
+            }
+        </style>
+    </th:block>
+
 </head>
 <body>
-<th:block th:replace="~{/web/fragments/header :: header}"></th:block>
 
-<section>
-    <div class="container border-top border-secondary border-opacity-50 bg-ct py-4">
-        <nav>
-            <div class="custom-nav-tabs" role="tablist">
-                <button class="custom-nav-link active rounded-top " data-target="#custom-home" role="tab"
-                        aria-controls="custom-home" aria-selected="true">
-                    Thông tin tài khoản
-                </button>
-                <button class="custom-nav-link rounded-top " data-target="#custom-profile" role="tab"
-                        aria-controls="custom-profile" aria-selected="false">
-                    Đổi mật khẩu
-                </button>
-            </div>
-        </nav>
-        <div class="custom-tab-content" id="custom-tabContent">
-            <div class="custom-tab-pane  active " id="custom-home" role="tabpanel" aria-labelledby="custom-home-tab">
-                <div class="d-flex justify-content-center align-items-center pt-4">
-                    <div class="card-profile" >
-                        <h4 class="mb-4 text-white text-center">Thông tin cá nhân</h4>
-                        <form class="form-profile">
-                            <div class="border-bottom border-secondary border-opacity-50 pb-2 mb-4">
-                                <div class="d-flex justify-content-center mb-2">
-                                    <img id="selectedAvatar" th:src="${session.currentUser.avatar}"
-                                         class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" alt="avatar" />
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <div class="btn btn-dark btn-rounded btn-sm" >
-                                        <label class="form-label text-white m-1" for="customFile2" role="button">Chọn ảnh</label>
-                                        <input type="file" class="form-control d-none" id="customFile2" onchange="displaySelectedImage(event, 'selectedAvatar')" />
+<th:block id="content-wrapper">
+    <section>
+        <div class="container border-top border-secondary border-opacity-50 bg-ct py-4">
+            <nav>
+                <div class="custom-nav-tabs" role="tablist">
+                    <button class="custom-nav-link active rounded-top " data-target="#custom-home" role="tab"
+                            aria-controls="custom-home" aria-selected="true">
+                        Thông tin tài khoản
+                    </button>
+                    <button class="custom-nav-link rounded-top " data-target="#custom-profile" role="tab"
+                            aria-controls="custom-profile" aria-selected="false">
+                        Đổi mật khẩu
+                    </button>
+                </div>
+            </nav>
+            <div class="custom-tab-content" id="custom-tabContent">
+                <div class="custom-tab-pane  active " id="custom-home" role="tabpanel" aria-labelledby="custom-home-tab">
+                    <div class="d-flex justify-content-center align-items-center pt-4">
+                        <div class="card-profile" >
+                            <h4 class="mb-4 text-white text-center">Thông tin cá nhân</h4>
+                            <form class="form-profile">
+                                <div class="border-bottom border-secondary border-opacity-50 pb-2 mb-4">
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <img id="selectedAvatar" th:src="${session.currentUser.avatar}"
+                                             class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" alt="avatar" />
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="btn btn-dark btn-rounded btn-sm" >
+                                            <label class="form-label text-white m-1" for="customFile2" role="button">Chọn ảnh</label>
+                                            <input type="file" class="form-control d-none" id="customFile2" onchange="displaySelectedImage(event, 'selectedAvatar')" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="mb-5 form-group">
-                                <label for="name" class="form-label text-white">Tên</label>
-                                <input type="text" class="form-control" id="name" name="name" th:value="${session.currentUser.name}"/>
-                            </div>
-                            <div class="mb-5 form-group">
-                                <label for="email" class="form-label text-white" >Email</label>
-                                <input type="text" class="form-control" id="email" name="email" th:value="${session.currentUser.email}" readonly/>
-                            </div>
-                            <div class="mb-3 d-flex justify-content-between">
-                                <button type="submit" class="btn btn-secondary" id="btn-update-profile">Cập nhật thông tin</button>
-                            </div>
-                        </form>
+                                <div class="mb-5 form-group">
+                                    <label for="name" class="form-label text-white">Tên</label>
+                                    <input type="text" class="form-control" id="name" name="name" th:value="${session.currentUser.name}"/>
+                                </div>
+                                <div class="mb-5 form-group">
+                                    <label for="email" class="form-label text-white" >Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" th:value="${session.currentUser.email}" readonly/>
+                                </div>
+                                <div class="mb-3 d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-secondary" id="btn-update-profile">Cập nhật thông tin</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="custom-tab-pane" id="custom-profile" role="tabpanel" aria-labelledby="custom-profile-tab">
-                <div class="d-flex justify-content-center align-items-center pt-4">
-                    <div class="card-change-password">
-                        <h4 class="mb-4 text-white text-center">Đổi mật khẩu</h4>
-                        <form class="form-change-password">
-                            <div class="mb-5 form-group">
-                                <label for="old-password" class="form-label text-white">Mật khẩu cũ</label>
-                                <input type="password" class="form-control" id="old-password" name="oldPassword"/>
-                            </div>
-                            <div class="mb-5 form-group">
-                                <label for="new-password" class="form-label text-white">Mật khẩu mới</label>
-                                <input type="password" class="form-control" id="new-password" name="newPassword"/>
-                            </div>
-                            <div class="mb-5 form-group">
-                                <label for="confirmPassword" class="form-label text-white">Xác nhận mật khẩu</label>
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"/>
-                            </div>
-                            <div class="mb-3 d-flex justify-content-between">
-                                <button type="submit" class="btn btn-secondary" id="btn-change-password">Đổi mật khẩu</button>
-                            </div>
-                        </form>
+                <div class="custom-tab-pane" id="custom-profile" role="tabpanel" aria-labelledby="custom-profile-tab">
+                    <div class="d-flex justify-content-center align-items-center pt-4">
+                        <div class="card-change-password">
+                            <h4 class="mb-4 text-white text-center">Đổi mật khẩu</h4>
+                            <form class="form-change-password">
+                                <div class="mb-5 form-group">
+                                    <label for="old-password" class="form-label text-white">Mật khẩu cũ</label>
+                                    <input type="password" class="form-control" id="old-password" name="oldPassword"/>
+                                </div>
+                                <div class="mb-5 form-group">
+                                    <label for="new-password" class="form-label text-white">Mật khẩu mới</label>
+                                    <input type="password" class="form-control" id="new-password" name="newPassword"/>
+                                </div>
+                                <div class="mb-5 form-group">
+                                    <label for="confirmPassword" class="form-label text-white">Xác nhận mật khẩu</label>
+                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"/>
+                                </div>
+                                <div class="mb-3 d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-secondary" id="btn-change-password">Đổi mật khẩu</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</th:block>
 
+<th:block id="js">
+    <script src="/web-assets/js/user-update-profile.js"></script>
+    <script>
+        document.querySelectorAll('.custom-nav-link').forEach(button => {
+            button.addEventListener('click', function () {
+                if (this.getAttribute('aria-disabled') === 'true') return;
 
-<th:block th:replace="~{/web/fragments/footer :: footer}"></th:block>
+                document.querySelectorAll('.custom-nav-link').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
-        integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
-        integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://kit.fontawesome.com/d898046858.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-<script src="/web-assets/js/main.js"></script>
-<script src="/web-assets/js/user-update-profile.js"></script>
-<script>
-    document.querySelectorAll('.custom-nav-link').forEach(button => {
-        button.addEventListener('click', function () {
-            if (this.getAttribute('aria-disabled') === 'true') return;
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
 
-            document.querySelectorAll('.custom-nav-link').forEach(btn => {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-selected', 'false');
+                document.querySelectorAll('.custom-tab-pane').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                const target = document.querySelector(this.getAttribute('data-target'));
+                target.classList.add('active');
             });
-
-            this.classList.add('active');
-            this.setAttribute('aria-selected', 'true');
-
-            document.querySelectorAll('.custom-tab-pane').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            const target = document.querySelector(this.getAttribute('data-target'));
-            target.classList.add('active');
         });
-    });
-    function displaySelectedImage(event, elementId) {
-        const selectedImage = document.getElementById(elementId);
-        const fileInput = event.target;
+        function displaySelectedImage(event, elementId) {
+            const selectedImage = document.getElementById(elementId);
+            const fileInput = event.target;
 
-        if (fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
 
-            reader.onload = function(e) {
-                selectedImage.src = e.target.result;
-            };
+                reader.onload = function(e) {
+                    selectedImage.src = e.target.result;
+                };
 
-            reader.readAsDataURL(fileInput.files[0]);
+                reader.readAsDataURL(fileInput.files[0]);
+            }
         }
-    }
-</script>
+    </script>
+</th:block>
 
 </body>
 </html>

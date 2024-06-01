@@ -18,4 +18,6 @@ public interface EpisodeService {
     void deleteEpisode(Integer id);
 
     Map uploadVideo(Integer id, MultipartFile file);
+
+    Episode getEpisode(Integer id, String tap);
 }

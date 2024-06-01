@@ -144,4 +144,31 @@ public class WebController {
         model.addAttribute("favorites", favorites);
         return "web/phim-yeu-thich";
     }
+
+    // xem phim
+    @GetMapping("/xem-phim/{id}/{slug}")
+    public String getXemPhimPage(Model model,
+                                 @PathVariable("id") int id,
+                                 @PathVariable("slug") String slug,
+                                 @RequestParam String tap   ) {
+        Random random = new Random();
+        Movie movie = movieService.getMovie(id, slug, true);
+        List<Episode> episodes = episodeService.getEpisodeListOfMovie(id);
+        List<Review> reviews = reviewService.getReviewListOfMovie(id);
+
+        List<Genre> genres = movie.getGenres();
+        String rdGenre = genres.get(random.nextInt(genres.size())).getName();
+        List<Movie> relateMovies = movieService.getRelateMovies(id, rdGenre, true);
+
+        Favorite favorite = favoriteService.findFavoriteForCurrentUserAndMovie(id);
+        Episode currentEpisode = episodeService.getEpisode(id, tap);
+
+        model.addAttribute("favorite", favorite);
+        model.addAttribute("movie", movie);
+        model.addAttribute("episodes", episodes);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("relateMovies",relateMovies);
+        model.addAttribute("currentEpisode", currentEpisode);
+        return "web/xem-phim";
+    }
 }

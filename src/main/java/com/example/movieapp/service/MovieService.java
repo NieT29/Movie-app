@@ -27,4 +27,6 @@ public interface MovieService {
    void deleteMovie(Integer id);
 
    String uploadPoster(Integer id, MultipartFile file);
+
+   List<Movie> getMoviesCreatedInMonth();
 }
