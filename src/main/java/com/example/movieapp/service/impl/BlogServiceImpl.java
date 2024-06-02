@@ -143,10 +143,10 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> getBlogsCreatedInMonth() {
+    public List<Blog> getBlogsCreatedByMonth() {
         LocalDateTime startDate = LocalDate.now().withDayOfMonth(1).atStartOfDay();
         LocalDateTime endDate = LocalDateTime.now();
-        return blogRepository.findBlogsCreatedBetween(startDate, endDate);
+        return blogRepository.findByCreatedAtBetween(startDate, endDate);
     }
 
 }

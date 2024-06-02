@@ -43,8 +43,5 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     Page<Movie> findByStatusOrderByRatingDesc(Boolean status, Pageable pageable);
 
 
-    @Query("SELECT m FROM Movie m WHERE m.createdAt BETWEEN :startDate AND :endDate")
-    List<Movie> findMoviesCreatedBetween(LocalDateTime startDate, LocalDateTime endDate);
-
-
+    List<Movie> findByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endOfMonth);
 }

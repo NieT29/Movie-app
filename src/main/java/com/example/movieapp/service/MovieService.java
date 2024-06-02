@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MovieService {
    List<Movie> getMovieByType(MovieType movieType, Boolean status, Sort sort);
@@ -28,5 +29,7 @@ public interface MovieService {
 
    String uploadPoster(Integer id, MultipartFile file);
 
-   List<Movie> getMoviesCreatedInMonth();
+   List<Movie> getMoviesCreatedByMonth();
+
+   Map<String, Integer> getMoviesCountForLastFiveMonths();
 }

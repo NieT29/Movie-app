@@ -16,6 +16,6 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     Blog findByIdAndSlugAndStatus(Integer id, String slug, Boolean status);
     List<Blog> findByUser_IdOrderByCreatedAtDesc(Integer userId);
 
-    @Query("SELECT m FROM Blog m WHERE m.createdAt BETWEEN :startDate AND :endDate")
-    List<Blog> findBlogsCreatedBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<Blog> findByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endOfMonth);
+
 }

@@ -15,6 +15,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmail(String email);
 
-    @Query("SELECT m FROM User m WHERE m.createdAt BETWEEN :startDate AND :endDate")
-    List<User> findUsersCreatedBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<User> findByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endOfMonth);
+
 }

@@ -47,8 +47,8 @@
                                     <div class="col-lg-4 col-6">
                                         <div class="small-box bg-info">
                                             <div class="inner">
-                                                <h3 th:text="${moviesInMonth.size()}+'/'+${allMovies.size()}">8/143</h3>
-                                                <p>Phim mới/Tổng số phim</p>
+                                                <h3 th:text="${moviesCountByMonth.size()}+'/'+${allMovies}">8/143</h3>
+                                                <p>Phim mới trong tháng/Tổng số phim</p>
                                             </div>
                                             <div class="icon">
                                                 <i class="ion ion-bag"></i>
@@ -61,8 +61,8 @@
                                     <div class="col-lg-4 col-6">
                                         <div class="small-box bg-success">
                                             <div class="inner">
-                                                <h3 th:text="${usersInMonth.size()}+'/'+${allUsers.size()}">62/738</h3>
-                                                <p>User mới/Tổng số user</p>
+                                                <h3 th:text="${usersCountByMonth.size()}+'/'+${allUsers}">62/738</h3>
+                                                <p>User mới trong tháng/Tổng số user</p>
                                             </div>
                                             <div class="icon">
                                                 <i class="ion ion-stats-bars"></i>
@@ -75,8 +75,8 @@
                                     <div class="col-lg-4 col-6">
                                         <div class="small-box bg-warning">
                                             <div class="inner">
-                                                <h3 th:text="${blogsInMonth.size()}+'/'+${allBlogs.size()}">4/60</h3>
-                                                <p>Bài viết mới/Tổng số bài viết</p>
+                                                <h3 th:text="${blogsCountByMonth.size()}+'/'+${allBlogs}">4/60</h3>
+                                                <p>Bài viết mới tháng/Tổng số bài viết</p>
                                             </div>
                                             <div class="icon">
                                                 <i class="ion ion-person-add"></i>
@@ -116,7 +116,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr th:each="movie : ${moviesInMonth}">
+                                                        <tr th:each="movie : ${moviesCountByMonth}">
                                                             <td>
                                                                 <a th:href="@{/admin/movies/{id}(id=${movie.getId()})}" th:text="${movie.name}">King Kong</a>
                                                             </td>
@@ -152,7 +152,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr th:each="user : ${usersInMonth}">
+                                                        <tr th:each="user : ${usersCountByMonth}">
                                                             <td>
                                                                 <a href="#" th:text="${user.name}">King Kong</a>
                                                             </td>
@@ -201,16 +201,21 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
+    <script th:inline="javascript">
         // Movie chart
         const ctxMovie = document.getElementById('movie-chart');
+        const moviesData5Month = [[${moviesData5Month}]]
+        console.log(moviesData5Month)
+
+        const labelsMovie = Object.keys(moviesData5Month)
+        const dataMovie = Object.values(moviesData5Month)
         new Chart(ctxMovie, {
             type: 'bar',
             data: {
-                labels: ["Tháng 1/2024", "Tháng 2/2024", "Tháng 3/2024", "Tháng 4/2024", "Tháng 5/2024"], // data.map(el => `Tháng ${el.month}/${el.year}`)
+                labels: labelsMovie, // ["Tháng 1/2024", "Tháng 2/2024", "Tháng 3/2024", "Tháng 4/2024", "Tháng 5/2024"], // data.map(el => `Tháng ${el.month}/${el.year}`)
                 datasets: [{
                     label: 'Phim cập nhật theo tháng',
-                    data: [12, 19, 3, 5, 8], // data.map(el => el.movieCount)
+                    data: dataMovie, // data.map(el => el.movieCount)
                     borderWidth: 1
                 }]
             },
@@ -225,13 +230,18 @@
 
         // User chart
         const ctxUser = document.getElementById('user-chart');
+        const usersData5Month = [[${usersData5Month}]]
+        console.log(usersData5Month)
+
+        const labelsUser = Object.keys(usersData5Month)
+        const dataUser = Object.values(usersData5Month)
         new Chart(ctxUser, {
             type: 'line',
             data: {
-                labels: ["Tháng 1/2024", "Tháng 2/2024", "Tháng 3/2024", "Tháng 4/2024", "Tháng 5/2024"],
+                labels: labelsUser,
                 datasets: [{
                     label: 'User đăng ký theo tháng',
-                    data: [20, 34, 54, 26, 62],
+                    data: dataUser,
                     borderWidth: 1
                 }]
             },

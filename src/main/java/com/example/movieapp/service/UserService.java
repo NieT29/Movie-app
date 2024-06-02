@@ -6,6 +6,7 @@ import com.example.movieapp.model.request.UpdatePasswordRequest;
 import com.example.movieapp.model.request.UpdateProfileUserRequest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
@@ -15,5 +16,6 @@ public interface UserService {
     void updatePassword(UpdatePasswordRequest request);
 
     List<User> getAllUsers();
-    List<User> getUsersCreatedInMonth();
+    List<User> getUsersCreatedByMonth();
+    Map<String, Integer> getUsersCountForLastFiveMonths();
 }

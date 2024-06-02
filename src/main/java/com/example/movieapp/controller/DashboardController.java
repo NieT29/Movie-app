@@ -1,6 +1,5 @@
 package com.example.movieapp.controller;
 
-import com.example.movieapp.repository.UserRepository;
 import com.example.movieapp.service.BlogService;
 import com.example.movieapp.service.MovieService;
 import com.example.movieapp.service.UserService;
@@ -9,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/dashboard")
@@ -20,12 +21,18 @@ public class DashboardController {
 
     @GetMapping
     public String getDashboardPage(Model model) {
-        model.addAttribute("moviesInMonth", movieService.getMoviesCreatedInMonth());
-        model.addAttribute("allMovies", movieService.getAllMovies());
-        model.addAttribute("usersInMonth", userService.getUsersCreatedInMonth());
-        model.addAttribute("allUsers", userService.getAllUsers());
-        model.addAttribute("blogsInMonth", blogService.getBlogsCreatedInMonth());
-        model.addAttribute("allBlogs", blogService.getAllBlogs());
+        model.addAttribute("moviesCountByMonth", movieService.getMoviesCreatedByMonth());
+        model.addAttribute("allMovies", movieService.getAllMovies().size());
+        Map<String, Integer> moviesData5Month = movieService.getMoviesCountForLastFiveMonths();
+        model.addAttribute("moviesData5Month", moviesData5Month);
+
+        model.addAttribute("usersCountByMonth", userService.getUsersCreatedByMonth());
+        model.addAttribute("allUsers", userService.getAllUsers().size());
+        Map<String, Integer> usersData5Month = userService.getUsersCountForLastFiveMonths();
+        model.addAttribute("usersData5Month", usersData5Month);
+
+        model.addAttribute("blogsCountByMonth", blogService.getBlogsCreatedByMonth());
+        model.addAttribute("allBlogs", blogService.getAllBlogs().size());
         return "admin/dashboard/dashboard";
     }
 }

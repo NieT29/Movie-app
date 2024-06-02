@@ -1,6 +1,7 @@
 package com.example.movieapp.service;
 
 import com.example.movieapp.entity.Blog;
+import com.example.movieapp.entity.Movie;
 import com.example.movieapp.entity.User;
 import com.example.movieapp.model.request.UpsertBlogRequest;
 import org.springframework.data.domain.Page;
@@ -26,5 +27,6 @@ public interface BlogService {
     String uploadThumbnail(Integer id, MultipartFile file);
 
 
-    List<Blog> getBlogsCreatedInMonth();
+    List<Blog> getBlogsCreatedByMonth();
+
 }

@@ -1,5 +1,6 @@
 package com.example.movieapp.service.impl;
 
+import com.example.movieapp.entity.Movie;
 import com.example.movieapp.entity.Review;
 import com.example.movieapp.entity.User;
 import com.example.movieapp.exception.BadRequestException;
@@ -16,9 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserSeviceImpl implements UserService {
@@ -79,9 +78,26 @@ public class UserSeviceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersCreatedInMonth() {
+    public List<User> getUsersCreatedByMonth() {
         LocalDateTime startDate = LocalDate.now().withDayOfMonth(1).atStartOfDay();
         LocalDateTime endDate = LocalDateTime.now();
-        return userRepository.findUsersCreatedBetween(startDate, endDate);
+        return userRepository.findByCreatedAtBetween(startDate, endDate);
+    }
+
+    @Override
+    public Map<String, Integer> getUsersCountForLastFiveMonths() {
+        Map<String, Integer> monthlyUserCount = new LinkedHashMap<>();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (int i = 0; i < 5; i++) {
+            LocalDateTime startOfMonth = now.minusMonths(i).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+            LocalDateTime endOfMonth = startOfMonth.plusMonths(1).minusSeconds(1);
+
+            List<User> users = userRepository.findByCreatedAtBetween(startOfMonth, endOfMonth);
+            String monthYear = "Tháng " + startOfMonth.getMonthValue() + "/" + startOfMonth.getYear();
+            monthlyUserCount.put(monthYear, users.size());
+        }
+
+        return monthlyUserCount;
     }
 }

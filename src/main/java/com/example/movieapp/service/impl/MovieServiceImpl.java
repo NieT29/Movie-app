@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -145,10 +146,27 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getMoviesCreatedInMonth() {
+    public List<Movie> getMoviesCreatedByMonth() {
         LocalDateTime startDate = LocalDate.now().withDayOfMonth(1).atStartOfDay();
         LocalDateTime endDate = LocalDateTime.now();
-        return movieRepository.findMoviesCreatedBetween(startDate, endDate);
+        return movieRepository.findByCreatedAtBetween(startDate, endDate);
+    }
+
+    @Override
+    public Map<String, Integer> getMoviesCountForLastFiveMonths() {
+        Map<String, Integer> monthlyMovieCount = new LinkedHashMap<>();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (int i = 0; i < 5; i++) {
+            LocalDateTime startOfMonth = now.minusMonths(i).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+            LocalDateTime endOfMonth = startOfMonth.plusMonths(1).minusSeconds(1);
+
+            List<Movie> movies = movieRepository.findByCreatedAtBetween(startOfMonth, endOfMonth);
+            String monthYear = "Tháng " + startOfMonth.getMonthValue() + "/" + startOfMonth.getYear();
+            monthlyMovieCount.put(monthYear, movies.size());
+        }
+
+        return monthlyMovieCount;
     }
 
 
