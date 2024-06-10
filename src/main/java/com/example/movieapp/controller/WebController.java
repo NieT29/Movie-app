@@ -6,6 +6,8 @@ import com.example.movieapp.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,9 +104,15 @@ public class WebController {
         String rdGenre = genres.get(random.nextInt(genres.size())).getName();
         List<Movie> relateMovies = movieService.getRelateMovies(id, rdGenre, true);
 
-        Favorite favorite = favoriteService.findFavoriteForCurrentUserAndMovie(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+            Favorite favorite = favoriteService.findFavoriteForCurrentUserAndMovie(id);
+            model.addAttribute("favorite", favorite);
+        } else {
+            model.addAttribute("favorite", null);
+        }
 
-        model.addAttribute("favorite", favorite);
+//        model.addAttribute("favorite", favorite);
         model.addAttribute("movie", movie);
         model.addAttribute("episodes", episodes);
         model.addAttribute("reviews", reviews);
@@ -160,10 +168,16 @@ public class WebController {
         String rdGenre = genres.get(random.nextInt(genres.size())).getName();
         List<Movie> relateMovies = movieService.getRelateMovies(id, rdGenre, true);
 
-        Favorite favorite = favoriteService.findFavoriteForCurrentUserAndMovie(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+            Favorite favorite = favoriteService.findFavoriteForCurrentUserAndMovie(id);
+            model.addAttribute("favorite", favorite);
+        } else {
+            model.addAttribute("favorite", null);
+        }
         Episode currentEpisode = episodeService.getEpisode(id, tap);
 
-        model.addAttribute("favorite", favorite);
+//        model.addAttribute("favorite", favorite);
         model.addAttribute("movie", movie);
         model.addAttribute("episodes", episodes);
         model.addAttribute("reviews", reviews);

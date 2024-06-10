@@ -8,9 +8,12 @@ import com.example.movieapp.exception.ResourceNotFoundException;
 import com.example.movieapp.model.request.UpdatePasswordRequest;
 import com.example.movieapp.model.request.UpdateProfileUserRequest;
 import com.example.movieapp.repository.UserRepository;
+import com.example.movieapp.security.CustomUserDetails;
 import com.example.movieapp.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,12 +29,15 @@ public class UserSeviceImpl implements UserService {
     @Autowired
     HttpSession session;
     @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
 
     @Override
     public void updateNameUser(UpdateProfileUserRequest request) {
-        User currentUser = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
         if (currentUser == null) {
             throw new BadRequestException("User not logged in");
         }
@@ -47,7 +53,10 @@ public class UserSeviceImpl implements UserService {
 
     @Override
     public void updatePassword(UpdatePasswordRequest request) {
-        User currentUser = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
         if (currentUser == null) {
             throw new BadRequestException("User not logged in");
         }

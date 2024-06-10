@@ -7,6 +7,7 @@ import com.example.movieapp.exception.BadRequestException;
 import com.example.movieapp.exception.ResourceNotFoundException;
 import com.example.movieapp.model.request.UpsertBlogRequest;
 import com.example.movieapp.repository.BlogRepository;
+import com.example.movieapp.security.CustomUserDetails;
 import com.example.movieapp.service.BlogService;
 import com.example.movieapp.service.FileService;
 import com.github.slugify.Slugify;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,8 +54,11 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Blog> getOwnBlogs() {
-        User user = (User) session.getAttribute("currentUser");
-        return blogRepository.findByUser_IdOrderByCreatedAtDesc(user.getId());
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
+        return blogRepository.findByUser_IdOrderByCreatedAtDesc(currentUser.getId());
     }
 
     @Override
@@ -63,8 +69,11 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog createBlog(UpsertBlogRequest request) {
-        User user = (User) session.getAttribute("currentUser");
-        if (user == null) {
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
+        if (currentUser == null) {
             throw new BadRequestException("User must be logged in to create a blog post");
         }
         Slugify slugify= Slugify.builder().build();
@@ -77,7 +86,7 @@ public class BlogServiceImpl implements BlogService {
                 .status(request.getStatus())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .user(user)
+                .user(currentUser)
                 .build();
         blogRepository.save(blog);
         return blog;
@@ -88,13 +97,16 @@ public class BlogServiceImpl implements BlogService {
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
 
-        User user = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
 
-        if (user == null) {
+        if (currentUser == null) {
             throw new BadRequestException("User must be logged in to update a blog post");
         }
 
-        if (!blog.getUser().getId().equals(user.getId())) {
+        if (!blog.getUser().getId().equals(currentUser.getId())) {
             throw new BadRequestException("User are not allowed to update other people's blogs");
         }
         Slugify slugify = Slugify.builder().build();
@@ -113,13 +125,16 @@ public class BlogServiceImpl implements BlogService {
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Blog not found"));
 
-        User user = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
 
-        if (user == null) {
+        if (currentUser == null) {
             throw new BadRequestException("User must be logged in to delete a blog post");
         }
 
-        if (!blog.getUser().getId().equals(user.getId())) {
+        if (!blog.getUser().getId().equals(currentUser.getId())) {
             throw new BadRequestException("User are not allowed to delete other people's blogs");
         }
         blogRepository.delete(blog);

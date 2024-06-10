@@ -9,6 +9,12 @@ import com.example.movieapp.repository.UserRepository;
 import com.example.movieapp.service.AuthService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +26,23 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final HttpSession session;
+    private final AuthenticationManager authenticationManager;
 
+    // TODO: Refactor lại login
     @Override
     public void login(LoginRequest request) {
-        // kiểm tra email xem co ton tai trong database khong
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new BadRequestException("Email  incorrect"));
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
 
-        // kiem ra xem password có khớp với password trong database khong
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new BadRequestException("Password incorrect");
+        try {
+            Authentication authentication = authenticationManager.authenticate(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            session.setAttribute("currentUser", authentication.getName());
+        } catch (DisabledException e) {
+            throw new BadRequestException("Tài khoản chưa được kích hoạt");
+        } catch (AuthenticationException e) {
+            throw new BadRequestException("Email hoặc mật khẩu không đúng");
         }
-
-        // luu thông tin user vao trong session de su dung o cac request tiep theo
-        session.setAttribute("currentUser", user);
     }
 
     public User register(RegisterRequest request) {
@@ -60,8 +69,9 @@ public class AuthServiceImpl implements AuthService {
         return user;
     }
 
-    @Override
-    public void logout() {
-        session.setAttribute("currentUser", null);
-    }
+//    @Override
+//    public void logout() {
+//        // TODO: sử dụng securityContexHolder để lấy thông tin user
+//        session.setAttribute("currentUser", null);
+//    }
 }

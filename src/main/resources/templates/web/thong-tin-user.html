@@ -62,7 +62,7 @@
                             <form class="form-profile">
                                 <div class="border-bottom border-secondary border-opacity-50 pb-2 mb-4">
                                     <div class="d-flex justify-content-center mb-2">
-                                        <img id="selectedAvatar" th:src="${session.currentUser.avatar}"
+                                        <img id="selectedAvatar" th:src="${#authentication.principal.user.avatar}"
                                              class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" alt="avatar" />
                                     </div>
                                     <div class="d-flex justify-content-center">
@@ -74,11 +74,11 @@
                                 </div>
                                 <div class="mb-5 form-group">
                                     <label for="name" class="form-label text-white">Tên</label>
-                                    <input type="text" class="form-control" id="name" name="name" th:value="${session.currentUser.name}"/>
+                                    <input type="text" class="form-control" id="name" name="name" th:value="${#authentication.principal.user.name}"/>
                                 </div>
                                 <div class="mb-5 form-group">
                                     <label for="email" class="form-label text-white" >Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" th:value="${session.currentUser.email}" readonly/>
+                                    <input type="text" class="form-control" id="email" name="email" th:value="${#authentication.principal.user.email}" readonly/>
                                 </div>
                                 <div class="mb-3 d-flex justify-content-between">
                                     <button type="submit" class="btn btn-secondary" id="btn-update-profile">Cập nhật thông tin</button>

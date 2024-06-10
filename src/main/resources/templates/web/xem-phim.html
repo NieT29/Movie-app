@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:replace="~{web/layout/layout  ::  layout(~{:: title}, ~{:: #css}, ~{:: #content-wrapper}, ~{:: #js})}">
 <head>
     <title>Chi tiết phim</title>
@@ -98,8 +99,8 @@
                             <span class="star"><i class="fa-solid fa-star"></i></span>
                         </p>
 
-                        <button th:if="${session.currentUser == null}"  type="button" class="btn btn-outline-danger favorite-btn">Yêu Thích <i class="fa-solid fa-heart"></i></button>
-                        <button th:if="${session.currentUser != null}"  type="button" class="btn btn-outline-danger favorite-btn">
+                        <button sec:authorize="!isAuthenticated()"  type="button" class="btn btn-outline-danger favorite-btn">Yêu Thích <i class="fa-solid fa-heart"></i></button>
+                        <button sec:authorize="isAuthenticated()"  type="button" class="btn btn-outline-danger favorite-btn">
                             <span th:if="${favorite != null}">Bỏ yêu thích</span>
                             <span th:if="${favorite == null}">Yêu thích</span>
                             <i class="fa-solid fa-heart"></i>
@@ -123,10 +124,10 @@
                         (<span th:text="${#lists.size(reviews)}"></span>)
                     </span>
                     </p>
-                    <p style="font-size: 14px; " th:if="${session.currentUser == null}">Vui lòng <a th:href="@{/dang-nhap}"
+                    <p style="font-size: 14px; " sec:authorize="!isAuthenticated()">Vui lòng <a th:href="@{/dang-nhap}"
                                                                                                     class="text-warning-emphasis">
                         đăng nhập</a> để bình luận</p>
-                    <button th:if="${session.currentUser != null}" type="button"
+                    <button sec:authorize="isAuthenticated()" type="button"
                             class="btn btn-secondary btn-open-modal mb-3" data-bs-toggle="modal"
                             data-bs-target="#modal-review">
                         Viết đánh giá
@@ -145,7 +146,7 @@
                             <p class="m-0 review-text" th:text="${review.content}">Phim hài quá</p>
                         </div>
                         <div class="mt-2"
-                             th:if="${session.currentUser != null and session.currentUser.id == review.user.id}">
+                             sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.id==review.user.id}">
                             <button th:onclick="'javascript:deleteReview(' + ${review.id} + ')'" type="button"
                                     class="btn btn-outline-secondary btn-sm btn-delete"
                                     style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .7rem;">

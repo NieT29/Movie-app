@@ -9,5 +9,5 @@ public interface AuthService {
 
     User register(RegisterRequest request);
 
-    void logout();
+//    void logout();
 }

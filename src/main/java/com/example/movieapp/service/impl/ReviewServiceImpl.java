@@ -9,9 +9,12 @@ import com.example.movieapp.model.request.UpsertReviewRequest;
 import com.example.movieapp.repository.MovieRepository;
 import com.example.movieapp.repository.ReviewRepository;
 import com.example.movieapp.repository.UserRepository;
+import com.example.movieapp.security.CustomUserDetails;
 import com.example.movieapp.service.ReviewService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,7 +37,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     public Review createReview(UpsertReviewRequest request) {
-        User user = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
 
         // kiểm tra xem movie có tồn tại hay không
         Movie movie = movieRepository.findById(request.getMovieId())
@@ -47,7 +53,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .movie(movie)
-                .user(user)
+                .user(currentUser)
                 .build();
 
         reviewRepository.save(review);
@@ -59,7 +65,10 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
 
-        User user = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
 
 
         // kiểm tra xem movie có tồn tại hay không
@@ -67,7 +76,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
 
         // kiểm tra xem review này có phải của user hay không
-        if (!review.getUser().getId().equals(user.getId())) {
+        if (!review.getUser().getId().equals(currentUser.getId())) {
             throw new BadRequestException("Not review's owner");
         }
 
@@ -91,11 +100,14 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
 
-        User user = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
 
 
         // kiểm tra xem review này có phải của user hay không
-        if (!review.getUser().getId().equals(user.getId())) {
+        if (!review.getUser().getId().equals(currentUser.getId())) {
             throw new BadRequestException("Not review's owner");
         }
 

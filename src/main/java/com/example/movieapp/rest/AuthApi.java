@@ -31,10 +31,10 @@ public class AuthApi {
         return new ResponseEntity<>(user, HttpStatus.CREATED); // 201
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout() {
-        authService.logout();
-        return ResponseEntity.ok("Logout successfully");
-    }
+//    @PostMapping("/logout")
+//    public ResponseEntity<?> logout() {
+//        authService.logout();
+//        return ResponseEntity.ok("Logout successfully");
+//    }
 
 }

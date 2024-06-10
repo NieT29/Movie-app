@@ -9,12 +9,15 @@ import com.example.movieapp.model.request.FavoriteRequest;
 import com.example.movieapp.repository.FavoriteRepository;
 import com.example.movieapp.repository.MovieRepository;
 import com.example.movieapp.repository.UserRepository;
+import com.example.movieapp.security.CustomUserDetails;
 import com.example.movieapp.service.FavoriteService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,14 +38,20 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public List<Favorite> findByUser_IdOrderByCreatedAtDesc() {
-        User user = (User) session.getAttribute("currentUser");
-        return favoriteRepository.findByUser_IdOrderByCreatedAtDesc(user.getId());
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
+        return favoriteRepository.findByUser_IdOrderByCreatedAtDesc(currentUser.getId());
     }
 
 
     @Override
     public Favorite findFavoriteForCurrentUserAndMovie(Integer movieId) {
-        User currentUser = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
         if (currentUser != null) {
             return favoriteRepository.findByUser_IdAndMovie_Id(currentUser.getId(), movieId);
         }
@@ -52,7 +61,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public Favorite addToFavorite(FavoriteRequest request) {
-        User user = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
 
         //kiểm tra xem phim có tồn tại không
         Movie movie = movieRepository.findById(request.getMovieId())
@@ -62,7 +74,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         Favorite favorite = Favorite.builder()
                 .createdAt(LocalDateTime.now())
                 .movie(movie)
-                .user(user)
+                .user(currentUser)
                 .build();
         favoriteRepository.save(favorite);
         return favorite;
@@ -70,14 +82,18 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public void removeFromFavorite(Integer id) {
-        User user = (User) session.getAttribute("currentUser");
+        // TODO: sử dụng securityContexHolder để lấy thông tin user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User currentUser = userDetails.getUser();
+
 
         // kiểm tra xem phim có tồn tại trong phim yêu thích hay không
         Favorite favorite = favoriteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Favorite not found"));
 
         // kiểm tra xem người dùng đang thao tác có phải là chủ sở hữu của phim yêu thích không
-        if (!favorite.getUser().getId().equals(user.getId())) {
+        if (!favorite.getUser().getId().equals(currentUser.getId())) {
             throw new BadRequestException("User not authorized to update favorite");
         }
 
