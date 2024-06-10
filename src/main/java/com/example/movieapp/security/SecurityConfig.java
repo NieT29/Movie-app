@@ -47,7 +47,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
 
 
-        // TODO: cấu hình path dựa trên ROLE
+
         // cấu hình path
         http.authorizeHttpRequests(auth -> {
             auth.requestMatchers("/").permitAll();
@@ -56,6 +56,7 @@ public class SecurityConfig {
 
             auth.anyRequest().permitAll();
         });
+
         // cấu hình logout
         http.logout(logout -> {
             logout.logoutSuccessUrl("/dang-nhap"); // nếu logout thành công thì chuyển hướng về trang chủ
